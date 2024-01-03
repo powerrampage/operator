@@ -1,0 +1,16 @@
+@import "~assets/styles/abstracts";
+
+.footer {
+  padding-block: 12px;
+  background: $primary;
+  width: 100%;
+
+  .socials {
+    @media (max-width: 530px) {
+      flex-wrap: wrap;
+      // display: flex;
+      // align-items: flex-start;
+      // flex-direction: column;
+    }
+  }
+}

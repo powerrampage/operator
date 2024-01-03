@@ -1,0 +1,6 @@
+@import "~assets/styles/abstracts";
+
+.sicnt-button {
+  @include flex-align-center;
+  box-shadow: none !important;
+}

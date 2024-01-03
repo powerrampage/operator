@@ -1,0 +1,146 @@
+@import "~assets/styles/abstracts";
+
+@mixin activeState {
+  border-color: $dark;
+  background: #fff;
+}
+
+@mixin disabledState {
+  border-color: $secondary;
+  background: $AthensGray;
+  &::placeholder {
+    color: $Raven;
+  }
+}
+
+@mixin errorState {
+  border: 1px solid #f3afa5 !important;
+  background: #fde9e6 !important;
+}
+
+@mixin inLargeSize {
+  .sicnt-input-label {
+    font-size: 14px;
+    padding: 0 4px;
+    left: 8px;
+  }
+}
+
+@mixin inMiddleSize {
+  .sicnt-input-label {
+    font-size: 13px;
+    padding: 0 3px;
+    left: 7px;
+  }
+  .sicnt-input-error {
+    margin-top: 3px;
+    font-size: 16px;
+    line-height: 20px;
+    padding-left: 26px;
+    &::before {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+@mixin inSmallSize {
+  .sicnt-input-label {
+    font-size: 11px;
+    padding: 0 2px;
+    left: 6px;
+    top: -8px;
+  }
+  .sicnt-input-error {
+    margin-top: 2px;
+    font-size: 14px;
+    line-height: 18px;
+    padding-left: 24px;
+    &::before {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+.sicnt-input-wrapper {
+  position: relative;
+
+  &__large {
+    @include inLargeSize;
+  }
+
+  &__middle {
+    @include inMiddleSize;
+  }
+
+  &__small {
+    @include inSmallSize;
+  }
+
+  &__error {
+    .ant-input-affix-wrapper,
+    textarea,
+    input {
+      @include errorState;
+    }
+
+    .ant-input-affix-wrapper input {
+      border: none !important;
+    }
+  }
+}
+
+.sicnt-input-label {
+  position: absolute;
+  background: #fff;
+  font-weight: 400;
+  top: -10px;
+
+  z-index: 3;
+  pointer-events: auto;
+  user-select: none;
+
+  &:has(+ * input:disabled),
+  &:has(+ * textarea:disabled) {
+    color: $RollingStone;
+  }
+}
+
+.sicnt-input-children {
+  input:focus,
+  .ant-input-affix-wrapper.ant-input-affix-wrapper-focused {
+    &,
+    input,
+    textarea {
+      @include activeState;
+    }
+  }
+
+  .ant-input-disabled,
+  .ant-input-affix-wrapper.ant-input-affix-wrapper-disabled {
+    @include disabledState;
+  }
+}
+
+.sicnt-input-error {
+  text-align: start;
+  margin-top: 5px;
+  position: relative;
+  color: $ErrorLight;
+  font-size: 17px;
+  line-height: 22px;
+  padding-left: 30px;
+
+  &::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 50%;
+    transform: translate(50%, 50%);
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    background: $error;
+  }
+}

@@ -1,0 +1,64 @@
+.date-picker {
+	border-radius: 8px !important;
+	border-color: #b6bccd !important;
+	height: 50px;
+	& input {
+		font-weight: 400;
+		// todo
+		color: #000 !important;
+	}
+	&.small {
+		height: 40px;
+	}
+
+	:global {
+		span[role="img"] {
+			width: 24px;
+			height: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			svg {
+				fill: #4d73d4;
+			}
+		}
+	}
+}
+
+.small {
+	.date-picker,
+	.blue-date-picker {
+		height: 12px !important;
+	}
+}
+
+.blue-date-picker {
+	border-radius: 8px !important;
+	border-color: #b6bccd !important;
+	background-color: #e8f0fd !important;
+	height: 50px;
+
+	:global {
+		span[role="img"] {
+			width: 24px;
+			height: 24px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			svg {
+				fill: #4d73d4;
+			}
+		}
+	}
+}
+
+.label {
+	position: absolute;
+	z-index: 1;
+	background: #fff;
+	top: -15px;
+	left: 10px;
+	padding: 0px 5px;
+}

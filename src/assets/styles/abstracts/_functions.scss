@@ -1,0 +1,139 @@
+@use "sass:math";
+
+// Percent
+@function percent($px, $from) {
+  $result: math.div($px, $from) * 100%;
+  @return $result;
+}
+
+// REM
+@function rem($px) {
+  $result: math.div($px, 16) + rem;
+  @return $result;
+}
+
+@function em($px) {
+  $result: math.div($px, 16) + em;
+  @return $result;
+}
+
+// EM
+/*   em(margin, font-size)
+font-size: rem(24);
+margin-right: em(10,24);
+*/
+@function em-margin($px, $current: 16) {
+  $result: math.div($px, $current) + em;
+  @return $result;
+}
+
+$sizes: (
+  -30,
+  -20,
+  -15,
+  -10,
+  -5,
+  0,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  10,
+  14,
+  15,
+  16,
+  17,
+  18,
+  20,
+  22,
+  24,
+  25,
+  26,
+  28,
+  30,
+  35,
+  40,
+  42,
+  45,
+  50,
+  55,
+  60,
+  65,
+  70,
+  80,
+  90,
+  101,
+  120,
+  130,
+  150,
+  160,
+  170,
+  200,
+  205,
+  250
+);
+
+@each $size in $sizes {
+  .size#{$size} {
+    font-size: #{$size}px !important;
+  }
+  .gap-#{$size} {
+    gap: #{$size}px;
+  }
+  .fz-#{$size} {
+    font-size: #{$size}px;
+  }
+  // MARGIN
+  .m#{$size} {
+    margin: #{$size}px !important;
+  }
+  .mx#{$size} {
+    margin-inline: #{$size}px;
+  }
+  .my#{$size} {
+    margin-block: #{$size}px;
+  }
+  .mb#{$size} {
+    margin-bottom: #{$size}px !important;
+  }
+  .mt#{$size} {
+    margin-top: #{$size}px;
+  }
+  .ml#{$size} {
+    margin-left: #{$size}px;
+  }
+  .mr#{$size} {
+    margin-right: #{$size}px;
+  }
+  // PADDING
+  .p#{$size} {
+    padding: #{$size}px;
+  }
+  .px#{$size} {
+    padding-inline: #{$size}px !important;
+  }
+  .py#{$size} {
+    padding-block: #{$size}px !important;
+  }
+  .pb#{$size} {
+    padding-bottom: #{$size}px;
+  }
+  .pt#{$size} {
+    padding-top: #{$size}px;
+  }
+  .pl#{$size} {
+    padding-left: #{$size}px;
+  }
+  .pr#{$size} {
+    padding-right: #{$size}px;
+  }
+
+  .w#{$size} {
+    width: #{$size}px !important;
+  }
+  .h#{$size} {
+    height: #{$size}px;
+  }
+}

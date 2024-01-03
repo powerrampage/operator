@@ -1,0 +1,35 @@
+@import "assets/styles/abstracts";
+
+.sicnt-table {
+  --active-color: $primary;
+  --font-color: #282f38;
+  --rows-cols-border-color: #f6f6f7;
+  --rows-cols-border-color2: #e6e9ed;
+  --row-bg-color: #d7d8da;
+  --disabled-color: #777b82;
+
+  position: relative;
+
+  @include customScrollbar($size: 10px);
+
+  thead {
+    th {
+      background: #f2f6fc !important;
+      text-transform: uppercase !important;
+      color: #122067 !important;
+      font-weight: normal !important;
+    }
+  }
+
+  .ant-table-row-selected {
+    .ant-table-cell {
+      background: #d1dce8 !important;
+    }
+  }
+
+  .ant-table-cell-fix-right.ant-table-cell-fix-right-first {
+    &::after {
+      box-shadow: inset -6px 0 6px -8px $primary !important;
+    }
+  }
+}

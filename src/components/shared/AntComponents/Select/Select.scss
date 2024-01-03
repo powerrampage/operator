@@ -1,0 +1,150 @@
+@import "~assets/styles/abstracts";
+
+@mixin activeState {
+  border-color: $dark;
+  background: #fff;
+}
+
+@mixin disabledState {
+  border-color: $secondary;
+  background: $AthensGray;
+  &::placeholder {
+    color: $Raven;
+  }
+}
+
+@mixin errorState {
+  border: 1px solid #f3afa5 !important;
+  background: #fde9e6 !important;
+}
+
+@mixin inLargeSize {
+  .sicnt-select-label {
+    font-size: 14px;
+    padding: 0 4px;
+    left: 8px;
+  }
+}
+
+@mixin inMiddleSize {
+  .sicnt-select-label {
+    font-size: 13px;
+    padding: 0 3px;
+    left: 7px;
+  }
+  .sicnt-select-error {
+    margin-top: 3px;
+    font-size: 16px;
+    line-height: 20px;
+    padding-left: 26px;
+    &::before {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+@mixin inSmallSize {
+  .sicnt-select-label {
+    font-size: 11px;
+    padding: 0 2px;
+    left: 6px;
+    top: -8px;
+  }
+  .sicnt-select-error {
+    margin-top: 2px;
+    font-size: 14px;
+    line-height: 18px;
+    padding-left: 24px;
+    &::before {
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+.sicnt-select-wrapper {
+  position: relative;
+
+  .ant-select {
+    width: 100%;
+  }
+
+  &__large {
+    @include inLargeSize;
+  }
+
+  &__middle {
+    @include inMiddleSize;
+  }
+
+  &__small {
+    @include inSmallSize;
+  }
+
+  &__error {
+    .ant-select-selector,
+    textarea,
+    select {
+      @include errorState;
+    }
+
+    .ant-select-selector input {
+      border: none !important;
+    }
+  }
+}
+
+.sicnt-select-label {
+  position: absolute;
+  background: #fff;
+  font-weight: 400;
+  top: -10px;
+
+  z-index: 3;
+  pointer-events: auto;
+  user-select: none;
+
+  &:has(+ * input:disabled),
+  &:has(+ * textarea:disabled) {
+    color: $RollingStone;
+  }
+}
+
+.sicnt-select-children {
+  input:focus,
+  .ant-select-affix-wrapper.ant-select-affix-wrapper-focused {
+    &,
+    input,
+    .ant-select-selector {
+      @include activeState;
+    }
+  }
+
+  .ant-select-disabled,
+  .ant-select-affix-wrapper.ant-select-affix-wrapper-disabled {
+    @include disabledState;
+  }
+}
+
+.sicnt-select-error {
+  text-align: start;
+  margin-top: 5px;
+  position: relative;
+  color: $ErrorLight;
+  font-size: 17px;
+  line-height: 22px;
+  padding-left: 30px;
+
+  &::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    bottom: 50%;
+    transform: translate(50%, 50%);
+    border-radius: 50%;
+    width: 13px;
+    height: 13px;
+    background: $error;
+  }
+}

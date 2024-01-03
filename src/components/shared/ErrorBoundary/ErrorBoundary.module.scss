@@ -1,0 +1,7 @@
+@import "assets/styles/abstracts/mixins/_flex";
+
+.container {
+  height: 100%;
+  @include flex-both-center;
+  flex-direction: column;
+}

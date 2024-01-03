@@ -1,0 +1,62 @@
+@import "assets/styles/abstracts";
+
+.sicnt-arrow {
+  &__left,
+  &__right,
+  &__top,
+  &__bottom {
+    position: absolute;
+    transition: background 0.25s ease 0s;
+    opacity: 0.2;
+    background: $dark;
+    @include flex-both-center();
+
+    &:hover {
+      background: $Raven;
+    }
+  }
+
+  &__left,
+  &__right {
+    top: 35%;
+    width: 43px;
+    height: 80px;
+  }
+
+  &__left {
+    left: 0;
+    border-radius: 0px 20px 20px 0px;
+
+    svg {
+      transform: rotate(-180deg);
+    }
+  }
+
+  &__right {
+    right: 0px;
+    border-radius: 20px 0px 0px 20px;
+  }
+
+  &__top,
+  &__bottom {
+    left: 45%;
+    width: 80px;
+    height: 43px;
+  }
+
+  &__top {
+    border-radius: 0px 0px 20px 20px;
+
+    svg {
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__bottom {
+    border-radius: 20px 20px 0px 0px;
+
+    svg {
+      transform: rotate(90deg);
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.checkbox {
+	:global {
+		.ant-checkbox {
+			// border-radius: 50%;
+			overflow: hidden;
+			flex: 0 0 auto;
+		}
+
+		.ant-checkbox-inner {
+			border-color: transparent !important;
+		}
+	}
+
+	&__without__checked__icon {
+		span[class="ant-checkbox-inner"] {
+			&::after {
+				display: none;
+			}
+		}
+	}
+}

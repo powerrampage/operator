@@ -1,0 +1,18 @@
+@import "~assets/styles/abstracts";
+
+.wrapper {
+  padding-block: 60px;
+  height: 100%;
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 100%;
+    background: url("~assets/images/svg/other/not-found.svg") no-repeat right bottom;
+    background-size: contain;
+  }
+}

@@ -1,0 +1,7 @@
+@import "~assets/styles/abstracts/variables.scss";
+
+.container {
+	max-width: $containerWidth;
+	margin-inline: auto;
+	padding-inline: 14.5px;
+}

@@ -1,0 +1,55 @@
+@import "~assets/styles/abstracts";
+
+// large
+$lgWidth: 47px;
+$lgHeight: 39px;
+// small
+$smWidth: 40px;
+$smHeight: 30px;
+
+.sicnt-pagination {
+  display: flex;
+  align-items: center;
+
+  &__left,
+  &__right {
+    height: 42.461px;
+    padding: 18px;
+    border-radius: 60px;
+    border: 1px solid #eaeaea;
+    background: transparent !important;
+    color: $RollingStone;
+  }
+
+  &__right {
+    svg {
+      transform: rotate(-180deg);
+    }
+  }
+
+  .ant-pagination-item {
+    @include flex-both-center;
+    width: 42.461px;
+    height: 42.461px;
+    border-radius: 60px;
+
+    &-active {
+      background: var(--sPrimaryDarker);
+      a {
+        color: #fff !important;
+      }
+    }
+  }
+
+  .ant-pagination-prev,
+  .ant-pagination-next {
+    height: auto;
+    line-height: normal;
+  }
+
+  .ant-pagination-disabled {
+    * {
+      color: $RollingStone;
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import "assets/styles/abstracts/mixins/_flex";
+
+/*******************************
+            Flex Layout
+  *******************************/
+.d-flex {
+  @include d-flex;
+}
+
+.flex-align-center {
+  @include d-flex;
+  align-items: center;
+}
+
+.flex-justify-center {
+  @include d-flex;
+  justify-content: center;
+}
+
+.flex-justify-around {
+  @include d-flex;
+  justify-content: space-around;
+}
+
+.flex-justify-between {
+  @include d-flex;
+  justify-content: space-between;
+}
+
+.flex-justify-end {
+  @include d-flex;
+  justify-content: flex-end;
+}
+
+.flex-both-center {
+  @include d-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-justify-align {
+  @include d-flex;
+  align-items: center;
+}
+
+.flex-between-center {
+  @include d-flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-direction-column {
+  @include d-flex;
+  flex-direction: column;
+}
+
+.flex-direction-both-center {
+  @include flex-direction-column;
+  @include flex-both-center;
+}

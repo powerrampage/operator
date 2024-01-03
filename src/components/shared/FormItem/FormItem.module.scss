@@ -1,0 +1,43 @@
+@import "~assets/styles/abstracts";
+
+.wrapper {
+  position: relative;
+
+  :global {
+    .ant-select {
+      width: 100%;
+    }
+  }
+
+  .label {
+    background: #fff;
+    position: absolute;
+    top: -10px;
+    z-index: 2;
+    line-height: 1;
+    font-size: 13px;
+    padding: 0 3px;
+    left: 7px;
+  }
+  .error {
+    text-align: start;
+    margin-top: 3px;
+    position: relative;
+    color: $ErrorLight;
+    font-size: 16px;
+    line-height: 20px;
+    padding-left: 26px;
+
+    &::before {
+      position: absolute;
+      content: "";
+      left: 0;
+      bottom: 50%;
+      transform: translate(50%, 50%);
+      border-radius: 50%;
+      width: 12px;
+      height: 12px;
+      background: $error;
+    }
+  }
+}

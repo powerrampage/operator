@@ -1,0 +1,24 @@
+.box {
+  text-align: center;
+  padding: 23px 53px;
+  padding-bottom: 55px;
+  margin: 0 auto;
+  width: 580px;
+  max-height: 636px;
+  border-radius: 32px;
+  background: #fafcffb2;
+
+  :global {
+    .ant-input-affix-wrapper {
+      padding: 18px 16px;
+      * {
+        color: #9098b1 !important;
+      }
+    }
+  }
+
+  @media (max-width: 580px) {
+    padding: 13px 23px;
+    width: 90%;
+  }
+}

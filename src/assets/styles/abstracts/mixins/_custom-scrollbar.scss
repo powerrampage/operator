@@ -1,0 +1,40 @@
+@mixin customScrollbar(
+  $primaryColor: #091b44,
+  $secondaryColor: #e6e9ed,
+  $borderRadius: 30px,
+  $size: 12px
+) {
+  /* Firefox */
+  &,
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: $primaryColor $secondaryColor;
+  }
+
+  /* Chrome, Edge and Safari */
+  &::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-track,
+  *::-webkit-scrollbar-track {
+    background: $secondaryColor;
+    border-radius: $borderRadius;
+  }
+  &::-webkit-scrollbar-track:active,
+  *::-webkit-scrollbar-track:active {
+    background-color: #cdd1dd;
+  }
+  &::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-thumb {
+    background-color: $primaryColor;
+    border-radius: $borderRadius;
+    border: 2px solid #ffffff;
+  }
+  &::-webkit-scrollbar-thumb:active,
+  *::-webkit-scrollbar-thumb:active {
+    border-color: $primaryColor;
+  }
+}

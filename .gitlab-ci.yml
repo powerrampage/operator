@@ -1,0 +1,73 @@
+image: node:16
+stages:
+  - build
+  - deploy
+
+#Staging
+build_staging:
+  stage: build
+  script:
+    - echo "Building deploy package"
+    - yarn install
+    - CI=false yarn build-dev
+    - echo "Build successful"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+  only:
+    - master
+
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Deploying to server"
+    # here your scripts
+    - echo "Deployed"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+  environment:
+    name: development
+    url: # URL
+  only:
+    - master
+
+send_new_translations_staging:
+  stage: send_translation
+  script:
+    - echo "Starting send new translations..."
+
+    - echo "Translations sent successfully"
+
+#Production
+build_prod:
+  stage: build
+  script:
+    - echo "Building deploy package"
+    - yarn install
+    - CI=false yarn build
+    - echo "Build successful"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+  only:
+    - production
+deploy_prod:
+  stage: deploy
+  script:
+    - echo "Deploying to server"
+    # here your scripts
+    - echo "Deployed"
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build
+  environment:
+    name: production
+    url: # URL
+  when: manual
+  only:
+    - production
