@@ -32,7 +32,7 @@ const UserProfile: FC<Props> = ({ openMenu, ...props }) => {
             <Typography.Text
               ellipsis
               style={{ maxWidth: 400 }}
-              className="size20 font-bold mb3 uppercase"
+              className="size20 font-bold mb3 uppercase underline"
               role="button"
             >
               {`${userInfo.lastName ?? "-"}
@@ -42,9 +42,6 @@ const UserProfile: FC<Props> = ({ openMenu, ...props }) => {
             <p className="size14 light mb3">
               {t("ЖШШИР")}: {userInfo?.pinfl}
             </p>
-            <Tag color="processing" className="m0">
-              {role}
-            </Tag>
           </div>
         )}
       </Space>

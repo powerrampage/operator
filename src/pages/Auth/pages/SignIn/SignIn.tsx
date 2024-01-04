@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Icon, Input } from "components/shared";
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, LoginOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { z } from "zod";
 import i18n from "services/i18n";
-import { notification } from "antd";
+import { Space, notification } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegisterUser } from "hooks";
-import { setToken, useAppDispatch } from "store";
+import { setToken, setUserInfo, setUserRole, useAppDispatch } from "store";
 import { _stringify } from "utils";
 import classes from "./SignIn.module.scss";
 import Logo from "assets/images/png/logo.png";
@@ -65,18 +65,28 @@ const SignIn: FC = () => {
     // loginMutation.mutate({
     //   payload: { userName: username, password },
     // });
+    dispatch(setToken("token123"));
+    dispatch(setUserRole("ADMIN"));
+    dispatch(
+      setUserInfo({
+        pinfl: "123132131",
+        lastName: "Adminov",
+        firstName: "Admin",
+        middleName: "Adminovich",
+      })
+    );
+    setTimeout(() => {
+      navigate("/");
+    }, 0);
   });
 
   return (
     <LoginWrapper>
       <div className={classes.box}>
-        <img
-          src={Logo}
-          alt="logo"
-          className="mb20 d-flex object-cover"
-          width={60}
-          height={60}
-        />
+        <Space className="text-center mb20 size25 bold mt10">
+          {t("Тизимга кириш")}
+          <LockOutlined />
+        </Space>
         <form onSubmit={onLogin} autoComplete="off">
           <div className="mb20">
             <Controller
@@ -115,6 +125,7 @@ const SignIn: FC = () => {
             className="flex-both-center py25"
             htmlType="submit"
             loading={false}
+            icon={<LoginOutlined />}
           >
             {t("Кириш")}
           </Button>

@@ -25,45 +25,12 @@ body {
 
 #root {
   min-height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
 }
 
-:root {
-  --sPrimary: #ff6600;
-  --sWhite: #fff;
-  --sError: #e9573f;
-  --sPrimaryDark: #081b45;
-  --sPrimaryLight: #0062ae;
-  --sPrimaryDarker: #091b44;
-
-  // additional
-  --sBlue: #325ecd;
-  --sBlueLight: #eef;
-  --sRed: #d62d30;
-  --sRedLight: #fde9e6;
-  --sBlueLink: #3c50e0;
-
-  // text colors
-  --sTextDanger: #001f60;
-  --sText: #333;
-  --sTextLight: #717c8c;
-  --sGray: #b6bccd;
-
-  // bg colors
-  --bgBody: #fff;
-  --bgHeader: #fff;
-  --bgFooter: #091b44;
-
-  --cardBg: #fff;
-
-  --borderColor: #c4c4c4;
-
-  --tableHeadBg: #f2f6fc;
-  --tableOddBg: #fff;
-  --tableBg: #fff;
-  --tableBorder: #d7d8da;
-
-  --scrollThumb: #091b44;
-  --scrollBar: #e6e9ed;
-}
+// #root {
+//   min-height: 100%;
+//   display: grid;
+//   grid-template-rows: auto 1fr auto;
+// }

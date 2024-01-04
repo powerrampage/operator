@@ -41,6 +41,10 @@ button {
   text-decoration: none;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .link {
   color: $primary;
   text-decoration: underline;
@@ -183,37 +187,6 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
-}
-
-.ant-btn-primary:not(:disabled) {
-  background: $primary;
-  &:hover {
-    background: $DarkPrimaryHover !important;
-  }
-}
-
-.ant-btn-link:not(:disabled) {
-  color: $primary;
-  &:hover {
-    color: $DarkPrimaryHover !important;
-  }
-}
-
-.fullscreen-enabled {
-  overflow: auto;
-  padding: 30px;
-  background: #fffffffa;
-
-  .apartment-view__body {
-    min-width: 290px;
-    height: 500px;
-  }
-}
-
-.flat-details-modal {
-  .ant-card-body {
-    width: 100%;
-  }
 }
 
 .display-none {

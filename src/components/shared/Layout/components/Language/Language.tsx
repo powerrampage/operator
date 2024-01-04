@@ -14,37 +14,27 @@ interface LanguageItem extends Omit<MenuItemType, "key"> {
 }
 
 const Language = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const storageLang = localStorage.getItem("i18nextLng") as Languages;
 
   const changeLang = (lang: Languages) => {
     i18n.changeLanguage(lang.toLowerCase());
-    window.location.reload();
   };
-
-  useEffect(() => {
-    document.documentElement.setAttribute("lang", storageLang);
-  }, [storageLang]);
 
   const languages: Array<LanguageItem> = [
     {
-      key: "uz",
-      label: (
-        <Space>
-          <Icon name="flag-uzb" />
-          <p>UZ</p>
-        </Space>
-      ),
-      onClick: () => changeLang("uz"),
+      key: "latin",
+      label: t("O'zbekcha"),
+      onClick: () => changeLang("latin"),
+    },
+    {
+      key: "cyril",
+      label: t("Ўзбекча"),
+      onClick: () => changeLang("cyril"),
     },
     {
       key: "ru",
-      label: (
-        <Space>
-          <Icon name="flag-russia" />
-          <p>RU</p>
-        </Space>
-      ),
+      label: t("Русский"),
       onClick: () => changeLang("ru"),
     },
   ];
@@ -54,7 +44,7 @@ const Language = () => {
   return (
     <Dropdown menu={{ items: languages }} className={classes.dropdown}>
       <Space>
-        <span>{currentLang?.label}</span>
+        <p>{currentLang?.label}</p>
         <DownOutlined />
       </Space>
     </Dropdown>

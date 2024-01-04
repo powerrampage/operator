@@ -4,6 +4,7 @@ import i18n from "i18next";
 
 import translationCyril from "assets/locales/cyril/translation.json";
 import translationRu from "assets/locales/ru/translation.json";
+import translationLatin from "assets/locales/latin/translation.json";
 import { languages } from "config";
 import { Languages } from "types";
 
@@ -15,11 +16,14 @@ i18n
   .init({
     keySeparator: "|",
     resources: {
-      uz: {
+      cyril: {
         translation: translationCyril,
       },
       ru: {
         translation: translationRu,
+      },
+      latin: {
+        translation: translationLatin,
       },
     },
     fallbackLng: languages,
@@ -34,15 +38,15 @@ i18n
 
 export default i18n;
 
-type LangLocalsKeys = "Uz" | "Ru";
+// type LangLocalsKeys = "Uz" | "Ru";
 
-const localEntries: Record<Languages, LangLocalsKeys> = {
-  uz: "Uz",
-  ru: "Ru",
-};
+// const localEntries: Record<Languages, LangLocalsKeys> = {
+//   uz: "Uz",
+//   ru: "Ru",
+// };
 
-export const getLocaleName = <T extends string>(name: T): `${T}${LangLocalsKeys}` => {
-  const currLang = (i18n.language as Languages) ?? "Uz";
+// export const getLocaleName = <T extends string>(name: T): `${T}${LangLocalsKeys}` => {
+//   const currLang = (i18n.language as Languages) ?? "Uz";
 
-  return `${name}${localEntries?.[currLang]}`;
-};
+//   return `${name}${localEntries?.[currLang]}`;
+// };

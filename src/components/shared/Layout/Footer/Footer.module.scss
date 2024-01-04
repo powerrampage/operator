@@ -1,9 +1,10 @@
 @import "~assets/styles/abstracts";
 
 .footer {
-  padding-block: 12px;
-  background: $primary;
+  border-top: 1px solid #afabab;
+  padding-block: 30px;
   width: 100%;
+  background: #f6f6f7;
 
   .socials {
     @media (max-width: 530px) {

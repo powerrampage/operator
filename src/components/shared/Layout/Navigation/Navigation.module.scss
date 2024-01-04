@@ -1,0 +1,55 @@
+@import "~assets/styles/abstracts";
+
+.nav {
+  position: relative;
+  padding-block: 15px;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(119, 123, 130, 0.26);
+  z-index: 9;
+  max-height: 100px;
+}
+
+.rowList {
+  :not(:last-child) {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translate(50%, -50%);
+      background: #d9d9d9;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+  }
+
+  :not(:first-child) {
+    text-align: center;
+  }
+  :last-child {
+    text-align: end;
+  }
+}
+
+.activeLink,
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 28px;
+  color: $dark;
+  text-decoration: none;
+  transition: all 0.3s ease 0s;
+}
+.link:hover {
+  color: $primary !important;
+}
+
+.activeLink {
+  color: $primary !important;
+}

@@ -27,6 +27,7 @@ import { ReactComponent as EspKey } from "assets/images/svg/other/esp-key.svg";
 import { ReactComponent as Location } from "assets/images/svg/other/location.svg";
 import { ReactComponent as Empty } from "assets/images/svg/other/empty.svg";
 import { ReactComponent as UpRight } from "assets/images/svg/other/up-right.svg";
+import { ReactComponent as Logo } from "assets/images/svg/other/logo.svg";
 
 export type IconName =
   | "calendar-dates"
@@ -52,7 +53,8 @@ export type IconName =
   | "esp-key"
   | "location"
   | "empty"
-  | "up-right";
+  | "up-right"
+  | "logo";
 
 export interface IconProps extends Omit<SVGProps<SVGSVGElement>, "name" | "type"> {
   name: IconName;
@@ -85,6 +87,7 @@ export const Icon = memo(({ name, ...props }: IconProps) => {
       location: <Location {...props} />,
       empty: <Empty {...props} />,
       "up-right": <UpRight {...props} />,
+      logo: <Logo {...props} />,
     }),
     [props]
   );

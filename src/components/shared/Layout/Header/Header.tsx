@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import DrawerMenu from "./DrawerMenu";
 import { useTranslation } from "react-i18next";
-import Logo from "assets/images/png/logo.png";
 
 const Header = () => {
   const { t } = useTranslation();
@@ -24,14 +23,8 @@ const Header = () => {
               <Col md={24}>
                 <Link to="/">
                   <Space size="middle" className={classes.logo}>
-                    <img
-                      src={Logo}
-                      alt="logo"
-                      width={60}
-                      height={60}
-                      className="object-cover"
-                    />
-                    <h3 className="mb0 dark">{t("Logo name")}</h3>
+                    <Icon name="logo" />
+                    <h3 className="mb0 dark">{t("Налоговый комитет")}</h3>
                   </Space>
                 </Link>
               </Col>

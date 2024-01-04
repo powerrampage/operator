@@ -24,10 +24,4 @@ export type RespData<TData> = {
   data: TData;
 };
 
-export type UserRoles =
-  | "ADMIN"
-  | "CLIENT"
-  | "BUILDER"
-  | "ARCHITECTURE"
-  | "SYS_ADMIN"
-  | "GOVERNMENT";
+export type UserRoles = "ADMIN";

@@ -3,7 +3,7 @@ import { ThemeConfig } from "antd/es/config-provider/context";
 // https://ant.design/docs/react/customize-theme#api
 export const globalAntdConfig: ThemeConfig = {
   token: {
-    colorPrimary: "#FF6600",
+    colorPrimary: "#325ecd",
     colorError: "#e9573f",
     colorTextDisabled: "#717C8C",
     fontWeightStrong: 700,
@@ -13,4 +13,4 @@ export const globalAntdConfig: ThemeConfig = {
   },
 };
 
-export const languages = ["uz", "ru"] as const;
+export const languages = ["cyril", "ru", "latin"] as const;

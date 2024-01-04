@@ -1,14 +1,24 @@
-import { FC } from "react";
+import { FC, Suspense, lazy } from "react";
 import FilterAction from "./components/FilterAction";
-import StatisticCharts from "./components/StatisticCharts";
-import TableOperator from "./components/TableOperator";
+import { Container } from "components/shared";
+import { Skeleton } from "antd";
+
+import StatisticChartsLoading from "./components/StatisticCharts/StatisticCharts.loading";
+const TableOperator = lazy(() => import("./components/TableOperator"));
+const StatisticCharts = lazy(() => import("./components/StatisticCharts"));
 
 const Home: FC = () => {
   return (
-    <section>
-      <FilterAction />
-      <StatisticCharts />
-      <TableOperator />
+    <section className="my40">
+      <Container>
+        <FilterAction />
+        <Suspense fallback={<StatisticChartsLoading />}>
+          <StatisticCharts />
+        </Suspense>
+        <Suspense fallback={<Skeleton active />}>
+          <TableOperator />
+        </Suspense>
+      </Container>
     </section>
   );
 };
