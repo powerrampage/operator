@@ -1,5 +1,15 @@
 @import "~assets/styles/abstracts";
 
+.wrapper {
+  margin-bottom: 40px;
+  :global {
+    .ant-spin-nested-loading,
+    .ant-spin-container {
+      height: 100% !important;
+    }
+  }
+}
+
 .chartBox {
   padding: 4px;
   width: 100%;

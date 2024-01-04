@@ -4,3 +4,4 @@ export * from "./useGeneralAPIQuery";
 export * from "./sp-options";
 
 // Endpoints
+export * from "./endpoints/info";

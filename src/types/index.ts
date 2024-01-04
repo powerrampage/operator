@@ -1,10 +1,11 @@
 export * from "./eimzo";
 export * from "./helpers";
 export * from "./mysoliq";
+export * from "./swagger";
 
 export interface ErrorReason {
   status: number;
-  message: string;
+  reason: string;
 }
 
 export type PageableParam<T> = {
