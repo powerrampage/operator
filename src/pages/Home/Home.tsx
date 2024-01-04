@@ -4,6 +4,7 @@ import { Container } from "components/shared";
 import { Skeleton } from "antd";
 
 import StatisticChartsLoading from "./components/StatisticCharts/StatisticCharts.loading";
+
 const TableOperator = lazy(() => import("./components/TableOperator"));
 const StatisticCharts = lazy(() => import("./components/StatisticCharts"));
 
