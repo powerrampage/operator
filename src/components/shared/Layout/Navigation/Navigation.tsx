@@ -11,9 +11,11 @@ import {
   OrderedListOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import { useUser } from "hooks";
 
 const Navigation: FC = () => {
   const { t } = useTranslation();
+  const { isLogged } = useUser();
   const { pathname } = useLocation();
 
   const list: Array<{ title: string; path: string; active?: boolean; icon: ReactNode }> = [
@@ -39,7 +41,7 @@ const Navigation: FC = () => {
     },
   ];
 
-  return (
+  return isLogged ? (
     <nav className={classes.nav}>
       <Container>
         <Row gutter={[20, 20]} className={classes.rowList}>
@@ -59,6 +61,8 @@ const Navigation: FC = () => {
         </Row>
       </Container>
     </nav>
+  ) : (
+    <div></div>
   );
 };
 
