@@ -48,7 +48,7 @@ const TableOperator: FC = () => {
 
   return (
     <div className="py30">
-      <Table columns={columns} />
+      <Table columns={columns} dataSource={[]} loading={false} />
     </div>
   );
 };

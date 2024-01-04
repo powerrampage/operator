@@ -9,7 +9,6 @@ const Layout = ({ children }: PropsWithChildren) => {
     <>
       <Header />
       <Navigation />
-      {/* className="flex-auto mb30 bg-white h100" */}
       <main>{children}</main>
       <Footer />
     </>

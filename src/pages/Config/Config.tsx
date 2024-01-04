@@ -1,11 +1,13 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import classes from "./Config.module.scss";
+import { Container } from "components/shared";
 
 const Config: FC = () => {
-  const { t } = useTranslation();
-
-  return <div>{t("Config")}</div>;
+  return (
+    <section className="my40">
+      <Container></Container>
+    </section>
+  );
 };
 
 export default Config;

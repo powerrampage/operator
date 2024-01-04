@@ -1,11 +1,17 @@
 import { FC } from "react";
-import { useTranslation } from "react-i18next";
-import classes from "./List.module.scss";
+import FilterAction from "./components/FilterAction";
+import TableList from "./components/TableList";
+import { Container } from "components/shared";
 
 const List: FC = () => {
-  const { t } = useTranslation();
-
-  return <div>{t("List")}</div>;
+  return (
+    <section className="my40">
+      <Container>
+        <FilterAction />
+        <TableList />
+      </Container>
+    </section>
+  );
 };
 
 export default List;

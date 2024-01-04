@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 const FilterAction: FC = () => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
+  const periods = searchParams.get("periods");
 
   return (
     <Row justify="space-between" className="mb40">
@@ -18,6 +19,11 @@ const FilterAction: FC = () => {
           allowClear
           size="large"
           format={DATE_FORMAT}
+          defaultValue={
+            searchParams.has("periods")
+              ? periods?.split(",").map((date) => dayjs(date))
+              : ([] as any)
+          }
           placeholder={[t("Сана дан"), t("Сана гача")]}
           suffixIcon={<Icon name="calendar-dates" />}
           onChange={(values) => {
