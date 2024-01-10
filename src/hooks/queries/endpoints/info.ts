@@ -4,6 +4,7 @@ import {
   ErrorReason,
   ResponseDataDtoListMessageStatusDto,
   ResponseDataDtoDashboardResponseDto,
+  Pageable,
 } from "types";
 
 export const useInfoGetAllOperatorStatsByDate = (
@@ -22,7 +23,7 @@ export const useInfoGetAllOperatorStatsByDate = (
 export const useInfoGetAllMessageStatusByNumber = (
   params: {
     number: string;
-  },
+  } & Pageable,
   options?: QueryOptions<ResponseDataDtoListMessageStatusDto, ErrorReason>
 ) =>
   useGeneralAPIQuery({
@@ -35,7 +36,7 @@ export const useInfoGetAllMessageStatusByNumberOperator = (
   params: {
     number: string;
     operator: string;
-  },
+  } & Pageable,
   options?: QueryOptions<ResponseDataDtoListMessageStatusDto, ErrorReason>
 ) =>
   useGeneralAPIQuery({

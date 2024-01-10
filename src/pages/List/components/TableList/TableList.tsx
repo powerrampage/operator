@@ -5,6 +5,7 @@ import { Badge } from "antd";
 import {
   useInfoGetAllMessageStatusByNumber,
   useInfoGetAllMessageStatusByNumberOperator,
+  usePagination,
 } from "hooks";
 import { useSearchParams } from "react-router-dom";
 import { MessageStatusDto } from "types";
@@ -16,6 +17,8 @@ const TableList: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const number = searchParams.get("phone")!;
   const operator = searchParams.get("operator")!;
+  const { page, pageSize, setPage } = usePagination({});
+  const expandedPagination = usePagination({});
 
   useEffect(() => {
     if (!number) {
@@ -24,28 +27,34 @@ const TableList: FC = () => {
     }
   }, [number, searchParams, setSearchParams]);
 
-  const messageQuery = useInfoGetAllMessageStatusByNumber({
-    number,
-  });
+  const messageQuery = useInfoGetAllMessageStatusByNumber(
+    {
+      page,
+      size: pageSize,
+      number,
+    },
+    { enabled: !!number }
+  );
+  const dataMessage = messageQuery.data?.data;
 
   const messageOperatorQuery = useInfoGetAllMessageStatusByNumberOperator(
     {
       number,
       operator,
+      page: expandedPagination.page,
+      size: expandedPagination.pageSize,
     },
-    { enabled: !!operator }
+    { enabled: Boolean(number && operator) }
   );
   const expandedDataMessage = useMemo(
-    () => messageOperatorQuery.data?.data?.data!,
+    () => messageOperatorQuery.data?.data,
     [messageOperatorQuery.data]
   );
-
-  const dataSource = messageQuery.data?.data?.data!;
 
   const columns: ColumnsType<MessageStatusDto> = [
     {
       title: "№",
-      render: (_, __, idx) => idx + 1,
+      render: (_, __, idx) => page * pageSize + idx + 1,
       align: "center",
       width: 80,
     },
@@ -73,8 +82,15 @@ const TableList: FC = () => {
   ];
 
   const expandedRowRender = useCallback(() => {
+    const { page, pageSize, setPage } = expandedPagination;
+
     const columns: ColumnsType<ExpandedDataDto> = [
-      { title: "№", align: "center", width: 80, render: (_, __, idx) => idx + 1 },
+      {
+        title: "№",
+        align: "center",
+        width: 80,
+        render: (_, __, idx) => page * pageSize + idx + 1,
+      },
       { title: t("Оператор"), dataIndex: "operator", align: "center" },
       { title: t("Қачон кетди"), dataIndex: "createdDate", align: "center" },
       {
@@ -87,10 +103,16 @@ const TableList: FC = () => {
 
     return (
       <Table
+        size="small"
         columns={columns}
-        dataSource={expandedDataMessage}
+        dataSource={expandedDataMessage?.data}
         loading={messageOperatorQuery.isFetching}
-        pagination={false}
+        pagination={{
+          pageSize,
+          current: page + 1,
+          total: expandedDataMessage?.totalCount,
+          onChange: (page) => setPage(page - 1),
+        }}
       />
     );
   }, [expandedDataMessage, messageOperatorQuery.isFetching, t]);
@@ -100,15 +122,15 @@ const TableList: FC = () => {
       <Table
         rowKey={({ id }) => id!}
         columns={columns}
-        dataSource={dataSource}
-        loading={messageQuery.isLoading}
+        dataSource={dataMessage?.data}
+        loading={messageQuery.isFetching}
         expandable={{
           expandedRowRender,
           expandIconColumnIndex: 5,
           columnTitle: t("Батафсил кўриш"),
           columnWidth: 150,
           onExpand(expanded, { operator }) {
-            if (operator) {
+            if (expanded && operator) {
               searchParams.set("operator", operator);
             } else {
               searchParams.delete("operator");
@@ -116,7 +138,12 @@ const TableList: FC = () => {
             setSearchParams(searchParams);
           },
         }}
-        pagination={false}
+        pagination={{
+          pageSize,
+          current: page + 1,
+          total: dataMessage?.totalCount,
+          onChange: (page) => setPage(page - 1),
+        }}
       />
     </div>
   );

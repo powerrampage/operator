@@ -13,12 +13,20 @@ export interface ResponseDataDtoBoolean {
   success?: boolean;
   reason?: string;
   data?: boolean;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface ResponseDataDtoObject {
   success?: boolean;
   reason?: string;
   data?: object;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface ResponseDataDtoInteger {
@@ -26,6 +34,10 @@ export interface ResponseDataDtoInteger {
   reason?: string;
   /** @format int32 */
   data?: number;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface ResponseDataDtoLong {
@@ -33,6 +45,10 @@ export interface ResponseDataDtoLong {
   reason?: string;
   /** @format int64 */
   data?: number;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface OperatorCompanyRequestDto {
@@ -52,6 +68,10 @@ export interface ResponseDataDtoString {
   success?: boolean;
   reason?: string;
   data?: string;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface ShablonOperatorRequestDto {
@@ -66,6 +86,10 @@ export interface ResponseDataDtoListShablonOperatorResponseDto {
   success?: boolean;
   reason?: string;
   data?: ShablonOperatorResponseDto[];
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface ShablonOperatorResponseDto {
@@ -97,6 +121,10 @@ export interface ResponseDataDtoListOperatorCompanyResponseDto {
   success?: boolean;
   reason?: string;
   data?: OperatorCompanyResponseDto[];
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface OperatorResponseDto {
@@ -115,12 +143,20 @@ export interface ResponseDataDtoOperatorResponseDto {
   success?: boolean;
   reason?: string;
   data?: OperatorResponseDto;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface ResponseDataDtoListOperatorResponseDto {
   success?: boolean;
   reason?: string;
   data?: OperatorResponseDto[];
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface DashboardResponseDto {
@@ -157,6 +193,24 @@ export interface ResponseDataDtoDashboardResponseDto {
   success?: boolean;
   reason?: string;
   data?: DashboardResponseDto;
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
+}
+
+export interface Pageable {
+  /**
+   * @format int32
+   * @min 0
+   */
+  page?: number;
+  /**
+   * @format int32
+   * @min 1
+   */
+  size?: number;
+  sort?: string[];
 }
 
 export interface MessageStatusDto {
@@ -176,6 +230,10 @@ export interface ResponseDataDtoListMessageStatusDto {
   success?: boolean;
   reason?: string;
   data?: MessageStatusDto[];
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
 }
 
 export interface Link {
@@ -1128,6 +1186,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       query: {
         /** eg: +998911234567 or 998911234567 */
         number: string;
+        pageable: Pageable;
       },
       params: RequestParams = {}
     ) =>
@@ -1157,6 +1216,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @example "Eskiz"
          */
         operator: string;
+        pageable: Pageable;
       },
       params: RequestParams = {}
     ) =>

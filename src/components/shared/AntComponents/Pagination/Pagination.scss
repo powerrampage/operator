@@ -34,7 +34,7 @@ $smHeight: 30px;
     border-radius: 60px;
 
     &-active {
-      background: var(--sPrimaryDarker);
+      background: $primary;
       a {
         color: #fff !important;
       }
