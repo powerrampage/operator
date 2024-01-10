@@ -1,14 +1,27 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import classes from "./TableOperator.module.scss";
 import { ColumnsType, Table } from "components/shared";
-
-type RecordDto = any;
+import { useSearchParams } from "react-router-dom";
+import { useInfoGetAllOperatorStatsByDate } from "hooks";
+import { OperatorStatsResponseDto } from "types";
+import { formatNumber } from "utils";
 
 const TableOperator: FC = () => {
   const { t } = useTranslation();
+  const [searchParams] = useSearchParams();
+  const [beginDate, endDate] = [
+    searchParams.get("fromDate"),
+    searchParams.get("toDate"),
+  ] as [string, string];
 
-  const columns: ColumnsType<RecordDto> = [
+  const operatorStateQuery = useInfoGetAllOperatorStatsByDate(
+    { beginDate, endDate },
+    { enabled: Boolean(beginDate && endDate) }
+  );
+
+  const dataSource = operatorStateQuery.data?.data?.data?.operatorStatsResponseDtoList;
+
+  const columns: ColumnsType<OperatorStatsResponseDto> = [
     {
       title: "№",
       render: (_, __, idx) => idx + 1,
@@ -16,31 +29,35 @@ const TableOperator: FC = () => {
     },
     {
       title: t("Оператор номи"),
-      dataIndex: "name",
+      dataIndex: "operatorName",
       width: 500,
     },
     {
       title: t("Жами сони"),
-      dataIndex: "totalCount",
+      dataIndex: "totalNumberOfMessages",
       align: "center",
+      render: (value) => formatNumber(value, 0),
     },
     {
       title: t("шундан"),
       children: [
         {
           title: t("Етиб борган"),
-          dataIndex: "totalCount",
+          dataIndex: "approvedMessageCount",
           align: "center",
+          render: (value) => formatNumber(value, 0),
         },
         {
           title: t("Хато билан қайтган"),
-          dataIndex: "totalCount",
+          dataIndex: "rejectedMessageCount",
           align: "center",
+          render: (value) => formatNumber(value, 0),
         },
         {
           title: t("Жавоб қилмаган"),
-          dataIndex: "totalCount",
+          dataIndex: "waitingMessageCount",
           align: "center",
+          render: (value) => formatNumber(value, 0),
         },
       ],
     },
@@ -48,7 +65,12 @@ const TableOperator: FC = () => {
 
   return (
     <div className="py30">
-      <Table columns={columns} dataSource={[]} loading={false} />
+      <Table
+        columns={columns}
+        dataSource={dataSource!}
+        loading={operatorStateQuery.isLoading}
+        pagination={false}
+      />
     </div>
   );
 };

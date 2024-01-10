@@ -1,17 +1,17 @@
 import { QueryOptions } from "hooks/custom";
 import { useGeneralAPIQuery } from "../useGeneralAPIQuery";
-import { ErrorReason } from "types";
 import {
+  ErrorReason,
   ResponseDataDtoListMessageStatusDto,
-  ResponseDataDtoListOperatorStatsRequestDto,
+  ResponseDataDtoDashboardResponseDto,
 } from "types";
 
-export const useInfoGetAllOperatorStats = (
+export const useInfoGetAllOperatorStatsByDate = (
   params: {
     beginDate: string;
     endDate: string;
   },
-  options?: QueryOptions<ResponseDataDtoListOperatorStatsRequestDto, ErrorReason>
+  options?: QueryOptions<ResponseDataDtoDashboardResponseDto, ErrorReason>
 ) =>
   useGeneralAPIQuery({
     url: "/v1/info/get-all-operator-stats-by-date",

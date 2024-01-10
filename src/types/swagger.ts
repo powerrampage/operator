@@ -48,18 +48,6 @@ export interface OperatorRequestDto {
   name: string;
 }
 
-export interface ResponseDataDtoSmsPotResponse {
-  success?: boolean;
-  reason?: string;
-  data?: SmsPotResponse;
-}
-
-export interface SmsPotResponse {
-  msg?: string;
-  success?: boolean;
-  error?: string;
-}
-
 export interface ResponseDataDtoString {
   success?: boolean;
   reason?: string;
@@ -74,7 +62,86 @@ export interface ShablonOperatorRequestDto {
   operator: string;
 }
 
-export interface OperatorStatsRequestDto {
+export interface ResponseDataDtoListShablonOperatorResponseDto {
+  success?: boolean;
+  reason?: string;
+  data?: ShablonOperatorResponseDto[];
+}
+
+export interface ShablonOperatorResponseDto {
+  /** @format int64 */
+  id?: number;
+  /** @format int32 */
+  shablonCode?: number;
+  operator?: string;
+  /** @format date-time */
+  createdAt?: string;
+  /** @format date-time */
+  updatedAt?: string;
+}
+
+export interface OperatorCompanyResponseDto {
+  /** @format int64 */
+  id?: number;
+  operator?: string;
+  company?: string;
+  /** @format int32 */
+  isActive?: number;
+  /** @format date-time */
+  createdAt?: string;
+  /** @format date-time */
+  updatedAt?: string;
+}
+
+export interface ResponseDataDtoListOperatorCompanyResponseDto {
+  success?: boolean;
+  reason?: string;
+  data?: OperatorCompanyResponseDto[];
+}
+
+export interface OperatorResponseDto {
+  /** @format int64 */
+  id?: number;
+  name?: string;
+  /** @format int32 */
+  isActive?: number;
+  /** @format date-time */
+  createdAt?: string;
+  /** @format date-time */
+  updatedAt?: string;
+}
+
+export interface ResponseDataDtoOperatorResponseDto {
+  success?: boolean;
+  reason?: string;
+  data?: OperatorResponseDto;
+}
+
+export interface ResponseDataDtoListOperatorResponseDto {
+  success?: boolean;
+  reason?: string;
+  data?: OperatorResponseDto[];
+}
+
+export interface DashboardResponseDto {
+  /** @format int64 */
+  totalApprovedMessageCount?: number;
+  /** @format int64 */
+  totalRejectedMessageCount?: number;
+  /** @format int64 */
+  totalWaitingMessageCount?: number;
+  messageCountByDateDtoList?: MessageCountByDateDto[];
+  operatorStatsResponseDtoList?: OperatorStatsResponseDto[];
+}
+
+export interface MessageCountByDateDto {
+  /** @format date */
+  date?: string;
+  /** @format int64 */
+  messageCount?: number;
+}
+
+export interface OperatorStatsResponseDto {
   operatorName?: string;
   /** @format int64 */
   totalNumberOfMessages?: number;
@@ -86,13 +153,15 @@ export interface OperatorStatsRequestDto {
   waitingMessageCount?: number;
 }
 
-export interface ResponseDataDtoListOperatorStatsRequestDto {
+export interface ResponseDataDtoDashboardResponseDto {
   success?: boolean;
   reason?: string;
-  data?: OperatorStatsRequestDto[];
+  data?: DashboardResponseDto;
 }
 
 export interface MessageStatusDto {
+  /** @format int64 */
+  id?: number;
   /** @format int64 */
   sendMessageId?: number;
   phoneNumber?: string;
@@ -359,6 +428,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags SMS API
      * @name SetSmsUssd
+     * @summary PlayMobile sms kelganda o'qib olish uchun
      * @request GET:/api/v1/sms/set-sms-ussd
      * @secure
      */
@@ -375,6 +445,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags SMS API
      * @name SetSmsUssd1
+     * @summary PlayMobile sms kelganda o'qib olish uchun
      * @request POST:/api/v1/sms/set-sms-ussd
      * @secure
      */
@@ -390,39 +461,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags SMS API
-     * @name SetSmsState
-     * @request GET:/api/v1/sms/set-sms-state
-     * @secure
-     */
-    setSmsState: (params: RequestParams = {}) =>
-      this.request<ResponseDataDtoBoolean, any>({
-        path: `/api/v1/sms/set-sms-state`,
-        method: "GET",
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags SMS API
-     * @name SetSmsState1
-     * @request POST:/api/v1/sms/set-sms-state
-     * @secure
-     */
-    setSmsState1: (params: RequestParams = {}) =>
-      this.request<ResponseDataDtoBoolean, any>({
-        path: `/api/v1/sms/set-sms-state`,
-        method: "POST",
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags SMS API
      * @name SetSmsStateEskiz
+     * @summary Eskiz uchun SMS statusini olish
      * @request GET:/api/v1/sms/set-sms-state-eskiz
      * @secure
      */
@@ -458,6 +498,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags SMS API
      * @name SetSmsStateEskiz1
+     * @summary Eskiz uchun SMS statusini olish
      * @request POST:/api/v1/sms/set-sms-state-eskiz
      * @secure
      */
@@ -492,7 +533,42 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags SMS API
+     * @name SetSmsState2
+     * @summary Getting playMobile sms response state
+     * @request GET:/api/v1/sms/set-sms-state
+     * @secure
+     */
+    setSmsState2: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoBoolean, any>({
+        path: `/api/v1/sms/set-sms-state`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsState3
+     * @summary Getting playMobile sms response state
+     * @request POST:/api/v1/sms/set-sms-state
+     * @secure
+     */
+    setSmsState3: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoBoolean, any>({
+        path: `/api/v1/sms/set-sms-state`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
      * @name SetRabbitByStatus
+     * @summary Exceldan yuklab olib qo'lda jo'natish uchun ishlatiladi
      * @request GET:/api/v1/sms/set-rabbit-by-status
      * @secure
      */
@@ -509,6 +585,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags SMS API
      * @name SetRabbitByStatus1
+     * @summary Exceldan yuklab olib qo'lda jo'natish uchun ishlatiladi
      * @request POST:/api/v1/sms/set-rabbit-by-status
      * @secure
      */
@@ -516,52 +593,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<ResponseDataDtoInteger, any>({
         path: `/api/v1/sms/set-rabbit-by-status`,
         method: "POST",
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags SMS API
-     * @name SetResponseSmesStateToAnswerSmsStatusByMySmsId
-     * @request GET:/api/v1/sms/set-answer-sms-state-by-sms-id
-     * @secure
-     */
-    setResponseSmesStateToAnswerSmsStatusByMySmsId: (
-      query: {
-        id: string;
-        status: string;
-      },
-      params: RequestParams = {}
-    ) =>
-      this.request<ResponseDataDtoBoolean, any>({
-        path: `/api/v1/sms/set-answer-sms-state-by-sms-id`,
-        method: "GET",
-        query: query,
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags SMS API
-     * @name SetResponseSmesStateToAnswerSmsStatusByMySmsId1
-     * @request POST:/api/v1/sms/set-answer-sms-state-by-sms-id
-     * @secure
-     */
-    setResponseSmesStateToAnswerSmsStatusByMySmsId1: (
-      query: {
-        id: string;
-        status: string;
-      },
-      params: RequestParams = {}
-    ) =>
-      this.request<ResponseDataDtoBoolean, any>({
-        path: `/api/v1/sms/set-answer-sms-state-by-sms-id`,
-        method: "POST",
-        query: query,
         secure: true,
         ...params,
       }),
@@ -715,41 +746,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags TAX API
-     * @name SetRabbitByStatus2
-     * @request GET:/api/v1/sms/send-sms-list
-     * @secure
-     */
-    setRabbitByStatus2: (params: RequestParams = {}) =>
-      this.request<ResponseDataDtoInteger, any>({
-        path: `/api/v1/sms/send-sms-list`,
-        method: "GET",
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags TAX API
-     * @name SetRabbitByStatus3
-     * @request POST:/api/v1/sms/send-sms-list
-     * @secure
-     */
-    setRabbitByStatus3: (params: RequestParams = {}) =>
-      this.request<ResponseDataDtoInteger, any>({
-        path: `/api/v1/sms/send-sms-list`,
-        method: "POST",
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags OPERATOR_COMPANY
      * @name Update
-     * @summary updating operator-company
+     * @summary nomlarini o'zgartirish id orqali
      * @request PUT:/api/v1/operator_company/update
      * @secure
      */
@@ -770,9 +769,57 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags OPERATOR_COMPANY
+     * @name Deactivate
+     * @summary operator-companyni o'chirish
+     * @request PUT:/api/v1/operator_company/deactivate
+     * @secure
+     */
+    deactivate: (
+      query: {
+        /** @format int64 */
+        id: number;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoObject, any>({
+        path: `/api/v1/operator_company/deactivate`,
+        method: "PUT",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags OPERATOR_COMPANY
+     * @name Activate
+     * @summary operator-companyni yoqish
+     * @request PUT:/api/v1/operator_company/activate
+     * @secure
+     */
+    activate: (
+      query: {
+        /** @format int64 */
+        id: number;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoObject, any>({
+        path: `/api/v1/operator_company/activate`,
+        method: "PUT",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags OPERATOR
      * @name Update1
-     * @summary updating operator
+     * @summary operatorni nomini o'zgartirish
      * @request PUT:/api/v1/operator/update
      * @secure
      */
@@ -790,12 +837,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags OPERATOR
-     * @name Deactivate
-     * @summary deactivating operator
+     * @name Deactivate1
+     * @summary operatorni o'chirish
      * @request PUT:/api/v1/operator/deactivate
      * @secure
      */
-    deactivate: (
+    deactivate1: (
       query: {
         /** @format int64 */
         id: number;
@@ -814,12 +861,36 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags OPERATOR
-     * @name Activate
-     * @summary activating operator
+     * @name ChangeDefaultOperator
+     * @summary default operatorni ozgartirish operator id berish orqali
+     * @request PUT:/api/v1/operator/change-default-operator
+     * @secure
+     */
+    changeDefaultOperator: (
+      query: {
+        /** @format int64 */
+        operator_id: number;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoObject, any>({
+        path: `/api/v1/operator/change-default-operator`,
+        method: "PUT",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags OPERATOR
+     * @name Activate1
+     * @summary operatorni yoqish
      * @request PUT:/api/v1/operator/activate
      * @secure
      */
-    activate: (
+    activate1: (
       query: {
         /** @format int64 */
         id: number;
@@ -837,56 +908,9 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags TAX API
-     * @name TestTaxService
-     * @request POST:/api/v1/sms/test/tax-service/send
-     * @secure
-     */
-    testTaxService: (
-      query?: {
-        /** @default "" */
-        mobile_phone?: string;
-        /** @default "" */
-        message?: string;
-      },
-      params: RequestParams = {}
-    ) =>
-      this.request<void, any>({
-        path: `/api/v1/sms/test/tax-service/send`,
-        method: "POST",
-        query: query,
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags SMS API
-     * @name TestPlayMobile
-     * @request POST:/api/v1/sms/test/playmobile
-     * @secure
-     */
-    testPlayMobile: (
-      query: {
-        phoneNumber: string;
-        message: string;
-      },
-      params: RequestParams = {}
-    ) =>
-      this.request<ResponseDataDtoSmsPotResponse, any>({
-        path: `/api/v1/sms/test/playmobile`,
-        method: "POST",
-        query: query,
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
      * @tags SMS API
      * @name SaveBlackList
+     * @summary Ushbu telefon raqamiga Smsni yubormaydigan qilish uchun
      * @request POST:/api/v1/sms/send-black-list
      * @secure
      */
@@ -916,7 +940,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags SHABLON-OPERATOR
      * @name Update2
-     * @summary updating shablon-operator
+     * @summary shablon-operator nomlarini o'zgartish
      * @request POST:/api/v1/shablon-operator/update
      * @secure
      */
@@ -935,7 +959,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags SHABLON-OPERATOR
      * @name Create
-     * @summary creating shablon-operator
+     * @summary shablon-operator yaratish
      * @request POST:/api/v1/shablon-operator/create
      * @secure
      */
@@ -954,7 +978,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags OPERATOR_COMPANY
      * @name Create1
-     * @summary Creating operator-company
+     * @summary operatorni mobile kompaniyalarga bog'lashni yaratish
      * @request POST:/api/v1/operator_company/create
      * @secure
      */
@@ -973,7 +997,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags OPERATOR
      * @name Create2
-     * @summary creating operator
+     * @summary operator yaratish
      * @request POST:/api/v1/operator/create
      * @secure
      */
@@ -994,27 +1018,96 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags SHABLON-OPERATOR
+     * @name GetAll
+     * @summary hamma shablon operator listini olish
+     * @request GET:/api/v1/shablon-operator/get-all
+     * @secure
+     */
+    getAll: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoListShablonOperatorResponseDto, any>({
+        path: `/api/v1/shablon-operator/get-all`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags OPERATOR_COMPANY
+     * @name GetAll1
+     * @summary barcha operator-company listini olish
+     * @request GET:/api/v1/operator_company/get-all
+     * @secure
+     */
+    getAll1: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoListOperatorCompanyResponseDto, any>({
+        path: `/api/v1/operator_company/get-all`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags OPERATOR
+     * @name GetDefaultOperator
+     * @summary default operatorni olish
+     * @request GET:/api/v1/operator/get-default-operator
+     * @secure
+     */
+    getDefaultOperator: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoOperatorResponseDto, any>({
+        path: `/api/v1/operator/get-default-operator`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags OPERATOR
+     * @name GetAllOperator
+     * @summary barcha operatorlarni olish
+     * @request GET:/api/v1/operator/get-all
+     * @secure
+     */
+    getAllOperator: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoListOperatorResponseDto, any>({
+        path: `/api/v1/operator/get-all`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags INFO API
-     * @name GetAllOperatorStatsByDate
+     * @name GetEachOperatorStatsByDate
+     * @summary dashboard statistikasi sana boyicha
      * @request GET:/api/v1/info/get-all-operator-stats-by-date
      * @secure
      */
-    getAllOperatorStatsByDate: (
+    getEachOperatorStatsByDate: (
       query: {
         /**
          * date format must be the same as example (dd.MM.yyyy)
          * @example "10.05.2015"
          */
-        "begin date": string;
+        beginDate: string;
         /**
          * date format must be the same as example (dd.MM.yyyy)
-         * @example "08.01.2024"
+         * @example "10.05.2024"
          */
-        "end date": string;
+        endDate: string;
       },
       params: RequestParams = {}
     ) =>
-      this.request<ResponseDataDtoListOperatorStatsRequestDto, any>({
+      this.request<ResponseDataDtoDashboardResponseDto, any>({
         path: `/api/v1/info/get-all-operator-stats-by-date`,
         method: "GET",
         query: query,
@@ -1027,11 +1120,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags INFO API
      * @name GetAllMessageStatusByNumber
+     * @summary tel nomerini berish orqali ushbu tel nomerdan ketgan smslarstatuslari listini olish
      * @request GET:/api/v1/info/get-all-message-status-by-number
      * @secure
      */
     getAllMessageStatusByNumber: (
       query: {
+        /** eg: +998911234567 or 998911234567 */
         number: string;
       },
       params: RequestParams = {}
@@ -1049,12 +1144,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags INFO API
      * @name GetAllMessageStatusByNumberAndOperator
+     * @summary operator nomi va tel nomer berish orqali shu nomerdan ushbuoperator orqali yuborilgan smslar boyicha sms statuslar listini olish
      * @request GET:/api/v1/info/get-all-message-status-by-number-operator
      * @secure
      */
     getAllMessageStatusByNumberAndOperator: (
       query: {
+        /** eg: +998911234567 or 998911234567 */
         number: string;
+        /**
+         * eg: PlayMobile, TaxService, Eskiz
+         * @example "Eskiz"
+         */
         operator: string;
       },
       params: RequestParams = {}
@@ -1062,6 +1163,374 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<ResponseDataDtoListMessageStatusDto, any>({
         path: `/api/v1/info/get-all-message-status-by-number-operator`,
         method: "GET",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags INFO API
+     * @name ClearingAllCachesManually
+     * @summary Barcha cachelarni tozalash uchun
+     * @request GET:/api/v1/info/clear-all-caches-manually
+     * @secure
+     */
+    clearingAllCachesManually: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoObject, any>({
+        path: `/api/v1/info/clear-all-caches-manually`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+  };
+  sms = {
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsUssd2
+     * @summary PlayMobile sms kelganda o'qib olish uchun
+     * @request GET:/sms/set-sms-ussd
+     * @secure
+     */
+    setSmsUssd2: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoBoolean, any>({
+        path: `/sms/set-sms-ussd`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsUssd3
+     * @summary PlayMobile sms kelganda o'qib olish uchun
+     * @request POST:/sms/set-sms-ussd
+     * @secure
+     */
+    setSmsUssd3: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoBoolean, any>({
+        path: `/sms/set-sms-ussd`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsStateEskiz2
+     * @summary Eskiz uchun SMS statusini olish
+     * @request GET:/sms/set-sms-state-eskiz
+     * @secure
+     */
+    setSmsStateEskiz2: (
+      query?: {
+        /** @default "" */
+        message_id?: string;
+        /** @default "" */
+        user_sms_id?: string;
+        /** @default "" */
+        country?: string;
+        /** @default "" */
+        phone_number?: string;
+        /** @default "" */
+        sms_count?: string;
+        /** @default "" */
+        status?: string;
+        /** @default "" */
+        status_date?: string;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoObject, any>({
+        path: `/sms/set-sms-state-eskiz`,
+        method: "GET",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsStateEskiz3
+     * @summary Eskiz uchun SMS statusini olish
+     * @request POST:/sms/set-sms-state-eskiz
+     * @secure
+     */
+    setSmsStateEskiz3: (
+      query?: {
+        /** @default "" */
+        message_id?: string;
+        /** @default "" */
+        user_sms_id?: string;
+        /** @default "" */
+        country?: string;
+        /** @default "" */
+        phone_number?: string;
+        /** @default "" */
+        sms_count?: string;
+        /** @default "" */
+        status?: string;
+        /** @default "" */
+        status_date?: string;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoObject, any>({
+        path: `/sms/set-sms-state-eskiz`,
+        method: "POST",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsState
+     * @summary Getting playMobile sms response state
+     * @request GET:/sms/set-sms-state
+     * @secure
+     */
+    setSmsState: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoBoolean, any>({
+        path: `/sms/set-sms-state`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetSmsState1
+     * @summary Getting playMobile sms response state
+     * @request POST:/sms/set-sms-state
+     * @secure
+     */
+    setSmsState1: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoBoolean, any>({
+        path: `/sms/set-sms-state`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetRabbitByStatus2
+     * @summary Exceldan yuklab olib qo'lda jo'natish uchun ishlatiladi
+     * @request GET:/sms/set-rabbit-by-status
+     * @secure
+     */
+    setRabbitByStatus2: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoInteger, any>({
+        path: `/sms/set-rabbit-by-status`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SetRabbitByStatus3
+     * @summary Exceldan yuklab olib qo'lda jo'natish uchun ishlatiladi
+     * @request POST:/sms/set-rabbit-by-status
+     * @secure
+     */
+    setRabbitByStatus3: (params: RequestParams = {}) =>
+      this.request<ResponseDataDtoInteger, any>({
+        path: `/sms/set-rabbit-by-status`,
+        method: "POST",
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SendSms2
+     * @request GET:/sms/sendSms
+     * @secure
+     */
+    sendSms2: (
+      query: {
+        /** @default "uz" */
+        lang?: string;
+        /** @format int32 */
+        shablon_code: number;
+        /**
+         * @format int32
+         * @default 5
+         */
+        priority?: number;
+        /** @default "" */
+        p0?: string;
+        /** @default "" */
+        p1?: string;
+        /** @default "" */
+        p2?: string;
+        /** @default "" */
+        p3?: string;
+        /** @default "" */
+        p4?: string;
+        /** @default "" */
+        p5?: string;
+        /** @default "" */
+        p6?: string;
+        /** @default "" */
+        p7?: string;
+        /** @default "" */
+        p8?: string;
+        /** @default "" */
+        p9?: string;
+        /**
+         * @format int32
+         * @default 0
+         */
+        ns10_code?: number;
+        /**
+         * @format int32
+         * @default 0
+         */
+        ns11_code?: number;
+        /** @default "-" */
+        tin?: string;
+        /**
+         * @format int32
+         * @default 0
+         */
+        is_individual?: number;
+        /**
+         * @format int64
+         * @default 4548
+         */
+        service_number?: number;
+        phone: string;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoLong, any>({
+        path: `/sms/sendSms`,
+        method: "GET",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SendSms3
+     * @request POST:/sms/sendSms
+     * @secure
+     */
+    sendSms3: (
+      query: {
+        /** @default "uz" */
+        lang?: string;
+        /** @format int32 */
+        shablon_code: number;
+        /**
+         * @format int32
+         * @default 5
+         */
+        priority?: number;
+        /** @default "" */
+        p0?: string;
+        /** @default "" */
+        p1?: string;
+        /** @default "" */
+        p2?: string;
+        /** @default "" */
+        p3?: string;
+        /** @default "" */
+        p4?: string;
+        /** @default "" */
+        p5?: string;
+        /** @default "" */
+        p6?: string;
+        /** @default "" */
+        p7?: string;
+        /** @default "" */
+        p8?: string;
+        /** @default "" */
+        p9?: string;
+        /**
+         * @format int32
+         * @default 0
+         */
+        ns10_code?: number;
+        /**
+         * @format int32
+         * @default 0
+         */
+        ns11_code?: number;
+        /** @default "-" */
+        tin?: string;
+        /**
+         * @format int32
+         * @default 0
+         */
+        is_individual?: number;
+        /**
+         * @format int64
+         * @default 4548
+         */
+        service_number?: number;
+        phone: string;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoLong, any>({
+        path: `/sms/sendSms`,
+        method: "POST",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SMS API
+     * @name SaveBlackList1
+     * @summary Ushbu telefon raqamiga Smsni yubormaydigan qilish uchun
+     * @request POST:/sms/send-black-list
+     * @secure
+     */
+    saveBlackList1: (
+      query: {
+        /** @default "uz" */
+        lang?: string;
+        /**
+         * @format int32
+         * @default 1
+         */
+        operator_id?: number;
+        phone: string;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoString, any>({
+        path: `/sms/send-black-list`,
+        method: "POST",
         query: query,
         secure: true,
         ...params,
