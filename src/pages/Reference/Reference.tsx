@@ -25,7 +25,7 @@ const Reference: FC = () => {
   const columns: ColumnsType<SmppShablonResDto> = [
     {
       title: "№",
-      render: (_, __, idx) => idx + 1,
+      render: (_, __, idx) => page * pageSize + idx + 1,
       align: "center",
     },
     {

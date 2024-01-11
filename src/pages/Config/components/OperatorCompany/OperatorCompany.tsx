@@ -1,12 +1,19 @@
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, ColumnsType, Table } from "components/shared";
-import { useOperatorCompanyGetAll, useOperatorGetAll, usePagination } from "hooks";
-import { OperatorResponseDto } from "types";
+import {
+  MutationOptions,
+  useOperatorCompanyActivate,
+  useOperatorCompanyDeactivate,
+  useOperatorCompanyGetAll,
+  useOperatorGetAll,
+  usePagination,
+} from "hooks";
+import { ErrorReason, OperatorResponseDto, ResponseDataDtoObject } from "types";
 import dayjs from "dayjs";
 import { DATE_FORMAT } from "constants/general";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Col, Row, Switch } from "antd";
+import { Col, Row, Switch, notification } from "antd";
 
 const OperatorCompany: FC = () => {
   const { t } = useTranslation();
@@ -17,10 +24,32 @@ const OperatorCompany: FC = () => {
   const getAllQuery = useOperatorCompanyGetAll({ page, size: pageSize });
   const dataGetAll = getAllQuery.data?.data;
 
+  const changeStatusMutationOptions: MutationOptions<
+    ResponseDataDtoObject,
+    ErrorReason,
+    unknown
+  > = {
+    onSuccess() {
+      getAllQuery.refetch();
+      notification.success({ message: t("Муваффақиятли амалга оширилди") });
+    },
+    onError({ message, response }) {
+      notification.error({
+        message: t("Хатолик юз берди"),
+        description: response?.data?.reason ?? message,
+      });
+    },
+  };
+
+  const activateMutation = useOperatorCompanyActivate({ ...changeStatusMutationOptions });
+  const deactivateMutation = useOperatorCompanyDeactivate({
+    ...changeStatusMutationOptions,
+  });
+
   const columns: ColumnsType<OperatorResponseDto> = [
     {
       title: "№",
-      render: (_, __, idx) => idx + 1,
+      render: (_, __, idx) => page * pageSize + idx + 1,
       align: "center",
     },
     {
@@ -47,8 +76,20 @@ const OperatorCompany: FC = () => {
       title: t("Ҳолати"),
       dataIndex: "isActive",
       align: "center",
-      render: (value) => {
-        return <Switch checked={!!value} title={t("Оператор ташкилотни ёқиш/ўчириш")} />;
+      render: (value, { id }) => {
+        return (
+          <Switch
+            checked={!!value}
+            title={t("Оператор ташкилотни ёқиш/ўчириш")}
+            onChange={(checked) => {
+              if (checked) {
+                activateMutation.mutate({ params: { id } });
+              } else {
+                deactivateMutation.mutate({ params: { id } });
+              }
+            }}
+          />
+        );
       },
     },
     {

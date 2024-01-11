@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, ColumnsType, Table } from "components/shared";
 import {
+  useOperatorActivate,
   useOperatorGetAll,
   usePagination,
   useShablonGetAll,
@@ -11,7 +12,7 @@ import { OperatorResponseDto } from "types";
 import dayjs from "dayjs";
 import { DATE_FORMAT } from "constants/general";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Col, Row } from "antd";
+import { Col, Row, notification } from "antd";
 
 const OperatorShablon: FC = () => {
   const { t } = useTranslation();
@@ -22,10 +23,11 @@ const OperatorShablon: FC = () => {
   const getAllQuery = useShablonOperatorGetAll({ page, size: pageSize });
   const dataGetAll = getAllQuery.data?.data;
 
+
   const columns: ColumnsType<OperatorResponseDto> = [
     {
       title: "№",
-      render: (_, __, idx) => idx + 1,
+      render: (_, __, idx) => page * pageSize + idx + 1,
       align: "center",
     },
     {
