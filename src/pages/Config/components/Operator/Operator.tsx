@@ -12,7 +12,7 @@ import { ErrorReason, OperatorResponseDto, ResponseDataDtoObject } from "types";
 import dayjs from "dayjs";
 import { DATE_FORMAT } from "constants/general";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Col, Row, Switch, notification } from "antd";
+import { Row, Switch, notification } from "antd";
 import ModalOperatorCreate from "./components/ModalOperatorCreate";
 import ModalOperatorUpdate from "./components/ModalOperatorUpdate";
 

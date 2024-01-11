@@ -6,20 +6,23 @@ import {
   useOperatorCompanyActivate,
   useOperatorCompanyDeactivate,
   useOperatorCompanyGetAll,
-  useOperatorGetAll,
   usePagination,
 } from "hooks";
-import { ErrorReason, OperatorResponseDto, ResponseDataDtoObject } from "types";
+import { ErrorReason, OperatorCompanyResponseDto, ResponseDataDtoObject } from "types";
 import dayjs from "dayjs";
 import { DATE_FORMAT } from "constants/general";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Col, Row, Switch, notification } from "antd";
+import { Row, Switch, notification } from "antd";
+
+import ModalOperatorCompanyCreate from "./components/ModalOperatorCompanyCreate";
+import ModalOperatorCompanyUpdate from "./components/ModalOperatorCompanyUpdate";
 
 const OperatorCompany: FC = () => {
   const { t } = useTranslation();
   const { page, pageSize, setPage } = usePagination();
-  const [modal, setModal] = useState<"close" | "update">("close");
-  const [row, setRow] = useState<OperatorResponseDto>();
+  const [modal, setModal] = useState<"close" | "create" | "update">("close");
+  const onClose = () => setModal("close");
+  const [row, setRow] = useState<OperatorCompanyResponseDto>();
 
   const getAllQuery = useOperatorCompanyGetAll({ page, size: pageSize });
   const dataGetAll = getAllQuery.data?.data;
@@ -46,7 +49,7 @@ const OperatorCompany: FC = () => {
     ...changeStatusMutationOptions,
   });
 
-  const columns: ColumnsType<OperatorResponseDto> = [
+  const columns: ColumnsType<OperatorCompanyResponseDto> = [
     {
       title: "№",
       render: (_, __, idx) => page * pageSize + idx + 1,
@@ -115,7 +118,12 @@ const OperatorCompany: FC = () => {
   return (
     <div className="mb40">
       <Row className="mb20" justify="end">
-        <Button shape="round" type="primary" icon={<PlusCircleOutlined />}>
+        <Button
+          shape="round"
+          type="primary"
+          icon={<PlusCircleOutlined />}
+          onClick={() => setModal("create")}
+        >
           {t("Оператор ташкилот қўшиш")}
         </Button>
       </Row>
@@ -133,6 +141,11 @@ const OperatorCompany: FC = () => {
           },
         }}
       />
+
+      {modal === "create" && <ModalOperatorCompanyCreate onCancel={onClose} />}
+      {modal === "update" && row && (
+        <ModalOperatorCompanyUpdate row={row} onCancel={onClose} />
+      )}
     </div>
   );
 };
