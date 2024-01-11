@@ -13,11 +13,14 @@ import dayjs from "dayjs";
 import { DATE_FORMAT } from "constants/general";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Col, Row, Switch, notification } from "antd";
+import ModalOperatorCreate from "./components/ModalOperatorCreate";
+import ModalOperatorUpdate from "./components/ModalOperatorUpdate";
 
 const Operator: FC = () => {
   const { t } = useTranslation();
   const { page, pageSize, setPage } = usePagination();
-  const [modal, setModal] = useState<"close" | "update">("close");
+  const [modal, setModal] = useState<"close" | "create" | "update">("close");
+  const onClose = () => setModal("close");
   const [row, setRow] = useState<OperatorResponseDto>();
 
   const getAllQuery = useOperatorGetAll({ page, size: pageSize });
@@ -108,7 +111,12 @@ const Operator: FC = () => {
   return (
     <div className="mb40">
       <Row justify="end" className="mb20">
-        <Button shape="round" type="primary" icon={<PlusCircleOutlined />}>
+        <Button
+          shape="round"
+          type="primary"
+          icon={<PlusCircleOutlined />}
+          onClick={() => setModal("create")}
+        >
           {t("Оператор қўшиш")}
         </Button>
       </Row>
@@ -126,6 +134,9 @@ const Operator: FC = () => {
           },
         }}
       />
+
+      {modal === "create" && <ModalOperatorCreate onCancel={onClose} />}
+      {modal === "update" && row && <ModalOperatorUpdate row={row} onCancel={onClose} />}
     </div>
   );
 };
