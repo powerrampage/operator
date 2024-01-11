@@ -78,6 +78,11 @@ const useCommonInfoContextValue = () => {
 
   const monthOptions = Object.values(months);
 
+  const blockedOptions = [
+    { label: t("Блокланган"), value: 1 },
+    { label: t("Фаол"), value: 0 },
+  ];
+
   return {
     state: {
       months,
@@ -86,6 +91,7 @@ const useCommonInfoContextValue = () => {
       mlnObjOptionsProxy,
       monthOptions,
       hashRegions,
+      blockedOptions,
     },
     actions: {},
   };

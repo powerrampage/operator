@@ -1,18 +1,28 @@
 import { FC, useState } from "react";
 import { Button, ColumnsType, Container, Table } from "components/shared";
 import { useTranslation } from "react-i18next";
-import { Col, Row } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
+import { Tag } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined } from "@ant-design/icons";
 import ReferenceForm from "./components/ReferenceForm";
-
-type RecordDto = any;
+import { usePagination, useShablonGetAll } from "hooks";
+import { SmppShablonResDto } from "types";
+import dayjs from "dayjs";
+import { DATE_FORMAT } from "constants/general";
 
 const Reference: FC = () => {
   const { t } = useTranslation();
-  const [modal, setModal] = useState<"close" | "add">("close");
+  const [modal, setModal] = useState<"close" | "edit">("close");
   const closeModal = () => setModal("close");
+  const { page, pageSize, setPage } = usePagination();
+  const [row, setRow] = useState<SmppShablonResDto>();
 
-  const columns: ColumnsType<RecordDto> = [
+  const shablonQuery = useShablonGetAll({
+    page,
+    size: pageSize,
+  });
+  const dataShablon = shablonQuery.data?.data;
+
+  const columns: ColumnsType<SmppShablonResDto> = [
     {
       title: "№",
       render: (_, __, idx) => idx + 1,
@@ -31,11 +41,13 @@ const Reference: FC = () => {
       title: t("Яратилган сана"),
       dataIndex: "createdAt",
       align: "center",
+      render: (value) => value && dayjs(value).format(DATE_FORMAT),
     },
     {
       title: t("Ўзгартирилган сана"),
       dataIndex: "updatedAt",
       align: "center",
+      render: (value) => value && dayjs(value).format(DATE_FORMAT),
     },
     {
       title: t("Устуворлик"),
@@ -58,36 +70,59 @@ const Reference: FC = () => {
       align: "center",
       render: (value) => {
         if (value === 1) {
-          return t("Блокланган");
+          return (
+            <Tag icon={<CloseCircleOutlined />} color="error">
+              {t("Блокланган")}
+            </Tag>
+          );
         } else if (value === 0) {
-          return t("Фаол");
+          return (
+            <Tag icon={<CheckCircleOutlined />} color="processing">
+              {t("Фаол")}
+            </Tag>
+          );
         }
       },
+    },
+    {
+      title: t("Амаллар"),
+      align: "center",
+      render: (_, record) => (
+        <div className="flex-both-center">
+          <Button
+            type="dashed"
+            className="flex-both-center"
+            icon={<EditOutlined />}
+            title={t("Таҳрирлаш")}
+            onClick={() => {
+              setRow(record);
+              setModal("edit");
+            }}
+          />
+        </div>
+      ),
     },
   ];
 
   return (
     <section className="my40">
       <Container>
-        <Row className="mb20" justify="space-between" align="middle" gutter={[20, 20]}>
-          <Col />
-          <Col>
-            <Button
-              size="large"
-              type="primary"
-              shape="round"
-              className="px30"
-              icon={<PlusCircleOutlined />}
-              onClick={() => setModal("add")}
-            >
-              {t("Қўшиш")}
-            </Button>
-          </Col>
-        </Row>
-        <Table columns={columns} dataSource={[]} loading={false} />
+        <Table
+          columns={columns}
+          dataSource={dataShablon?.data}
+          loading={shablonQuery.isLoading}
+          pagination={{
+            pageSize,
+            current: page + 1,
+            total: dataShablon?.totalCount,
+            onChange: (page) => {
+              setPage(page - 1);
+            },
+          }}
+        />
       </Container>
 
-      {modal === "add" && <ReferenceForm onCancel={closeModal} />}
+      {modal === "edit" && row && <ReferenceForm row={row} onCancel={closeModal} />}
     </section>
   );
 };

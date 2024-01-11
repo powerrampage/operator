@@ -10,3 +10,6 @@ export const requiredSelect = (message: string = i18n.t("Танлаш мажбу
   z
     .number({ required_error: message, invalid_type_error: message })
     .min(1, { message: message });
+
+export const requiredNumber = (message: string = i18n.t("Киритиш мажбурий")) =>
+  z.number({ required_error: message, invalid_type_error: message });

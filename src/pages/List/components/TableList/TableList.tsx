@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnsType, Table } from "components/shared";
 import { Badge } from "antd";
@@ -10,8 +10,6 @@ import {
 import { useSearchParams } from "react-router-dom";
 import { MessageStatusDto } from "types";
 
-type ExpandedDataDto = any;
-
 const TableList: FC = () => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +17,7 @@ const TableList: FC = () => {
   const operator = searchParams.get("operator")!;
   const { page, pageSize, setPage } = usePagination({});
   const expandedPagination = usePagination({});
+  const [rowId, setRowId] = useState<number>();
 
   useEffect(() => {
     if (!number) {
@@ -84,7 +83,7 @@ const TableList: FC = () => {
   const expandedRowRender = useCallback(() => {
     const { page, pageSize, setPage } = expandedPagination;
 
-    const columns: ColumnsType<ExpandedDataDto> = [
+    const columns: ColumnsType<MessageStatusDto> = [
       {
         title: "№",
         align: "center",
@@ -129,12 +128,16 @@ const TableList: FC = () => {
           expandIconColumnIndex: 5,
           columnTitle: t("Батафсил кўриш"),
           columnWidth: 150,
-          onExpand(expanded, { operator }) {
+          expandedRowKeys: [rowId!],
+          onExpand(expanded, { operator, id }) {
             if (expanded && operator) {
               searchParams.set("operator", operator);
+              setRowId(id);
             } else {
               searchParams.delete("operator");
+              setRowId(undefined);
             }
+            expandedPagination.setPage(0);
             setSearchParams(searchParams);
           },
         }}
@@ -142,7 +145,11 @@ const TableList: FC = () => {
           pageSize,
           current: page + 1,
           total: dataMessage?.totalCount,
-          onChange: (page) => setPage(page - 1),
+          onChange: (page) => {
+            setRowId(undefined);
+            searchParams.delete("operator");
+            setPage(page - 1);
+          },
         }}
       />
     </div>

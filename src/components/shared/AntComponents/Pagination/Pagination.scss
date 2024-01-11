@@ -1,20 +1,13 @@
 @import "~assets/styles/abstracts";
 
-// large
-$lgWidth: 47px;
-$lgHeight: 39px;
-// small
-$smWidth: 40px;
-$smHeight: 30px;
-
 .sicnt-pagination {
   display: flex;
   align-items: center;
+  gap: 5px;
 
   &__left,
   &__right {
-    height: 42.461px;
-    padding: 18px;
+    padding: 18px !important;
     border-radius: 60px;
     border: 1px solid #eaeaea;
     background: transparent !important;
@@ -29,8 +22,9 @@ $smHeight: 30px;
 
   .ant-pagination-item {
     @include flex-both-center;
-    width: 42.461px;
-    height: 42.461px;
+    margin: 0 !important;
+    height: 32px !important;
+    width: 42.461px !important;
     border-radius: 60px;
 
     &-active {
@@ -43,12 +37,17 @@ $smHeight: 30px;
 
   .ant-pagination-prev,
   .ant-pagination-next {
-    height: auto;
+    margin: 0 !important;
+    height: auto !important;
     line-height: normal;
+
+    rect {
+      fill: transparent !important;
+    }
   }
 
   .ant-pagination-disabled {
-    * {
+    *:not(path) {
       color: $RollingStone;
     }
   }

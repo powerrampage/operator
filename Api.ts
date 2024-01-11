@@ -74,12 +74,70 @@ export interface ResponseDataDtoString {
   totalCount?: number;
 }
 
+export interface SmppShablonReqDto {
+  /** @format int32 */
+  id: number;
+  /** @format int32 */
+  priority: number;
+  tag: string;
+  /** @format int64 */
+  operatorCode: number;
+  /** @format int32 */
+  blocked: number;
+}
+
 export interface ShablonOperatorRequestDto {
   /** @format int64 */
   id?: number;
   /** @format int32 */
   shablonCode: number;
   operator: string;
+}
+
+export interface Pageable {
+  /**
+   * @format int32
+   * @min 0
+   */
+  page?: number;
+  /**
+   * @format int32
+   * @min 1
+   */
+  size?: number;
+  sort?: string[];
+}
+
+export interface ResponseDataDtoListSmppShablonResDto {
+  success?: boolean;
+  reason?: string;
+  data?: SmppShablonResDto[];
+  /** @format int32 */
+  count?: number;
+  /** @format int64 */
+  totalCount?: number;
+}
+
+export interface SmppShablonResDto {
+  /** @format int32 */
+  id?: number;
+  /** @format int32 */
+  code?: number;
+  textRu?: string;
+  textUz?: string;
+  /** @format int32 */
+  priority?: number;
+  /** @format int32 */
+  state?: number;
+  /** @format date-time */
+  createdAt?: string;
+  /** @format date-time */
+  updatedAt?: string;
+  tag?: string;
+  /** @format int64 */
+  operatorCode?: number;
+  /** @format int32 */
+  blocked?: number;
 }
 
 export interface ResponseDataDtoListShablonOperatorResponseDto {
@@ -197,20 +255,6 @@ export interface ResponseDataDtoDashboardResponseDto {
   count?: number;
   /** @format int64 */
   totalCount?: number;
-}
-
-export interface Pageable {
-  /**
-   * @format int32
-   * @min 0
-   */
-  page?: number;
-  /**
-   * @format int32
-   * @min 1
-   */
-  size?: number;
-  sort?: string[];
 }
 
 export interface MessageStatusDto {
@@ -996,6 +1040,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags SHABLON-API
+     * @name Save
+     * @summary shablonni update qilish
+     * @request POST:/api/v1/shablon/update
+     * @secure
+     */
+    save: (data: SmppShablonReqDto, params: RequestParams = {}) =>
+      this.request<ResponseDataDtoString, any>({
+        path: `/api/v1/shablon/update`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
      * @tags SHABLON-OPERATOR
      * @name Update2
      * @summary shablon-operator nomlarini o'zgartish
@@ -1076,13 +1139,36 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags SHABLON-OPERATOR
+     * @tags SHABLON-API
      * @name GetAll
+     * @summary hamma shablonlar listini olish
+     * @request GET:/api/v1/shablon/get-all
+     * @secure
+     */
+    getAll: (
+      query: {
+        pageable: Pageable;
+      },
+      params: RequestParams = {}
+    ) =>
+      this.request<ResponseDataDtoListSmppShablonResDto, any>({
+        path: `/api/v1/shablon/get-all`,
+        method: "GET",
+        query: query,
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags SHABLON-OPERATOR
+     * @name GetAll1
      * @summary hamma shablon operator listini olish
      * @request GET:/api/v1/shablon-operator/get-all
      * @secure
      */
-    getAll: (params: RequestParams = {}) =>
+    getAll1: (params: RequestParams = {}) =>
       this.request<ResponseDataDtoListShablonOperatorResponseDto, any>({
         path: `/api/v1/shablon-operator/get-all`,
         method: "GET",
@@ -1094,12 +1180,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags OPERATOR_COMPANY
-     * @name GetAll1
+     * @name GetAll2
      * @summary barcha operator-company listini olish
      * @request GET:/api/v1/operator_company/get-all
      * @secure
      */
-    getAll1: (params: RequestParams = {}) =>
+    getAll2: (params: RequestParams = {}) =>
       this.request<ResponseDataDtoListOperatorCompanyResponseDto, any>({
         path: `/api/v1/operator_company/get-all`,
         method: "GET",

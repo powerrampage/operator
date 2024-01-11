@@ -24,7 +24,7 @@ const Header = () => {
                 <Link to="/">
                   <Space size="middle" className={classes.logo}>
                     <Icon name="logo" />
-                    <h3 className="mb0 dark">{t("Налоговый комитет")}</h3>
+                    <h3 className="mb0 dark">{t("SMS service")}</h3>
                   </Space>
                 </Link>
               </Col>
