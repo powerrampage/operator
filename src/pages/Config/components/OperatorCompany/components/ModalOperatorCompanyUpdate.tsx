@@ -84,7 +84,7 @@ const ModalOperatorCompanyUpdate: FC<Props> = ({ onCancel, row, ...props }) => {
           shape="round"
           icon={<CheckOutlined />}
           onClick={onSubmit}
-          // loading={updateMutation.isLoading}
+          loading={updateMutation.isLoading}
         >
           {t("Сақлаш")}
         </Button>

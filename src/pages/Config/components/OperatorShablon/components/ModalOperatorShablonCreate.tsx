@@ -1,37 +1,32 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Divider, Modal, ModalProps, Row, notification } from "antd";
-import OperatorForm from "./OperatorForm";
-import { OperatorResponseDto } from "types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { requiredField } from "utils";
 import { Button } from "components/shared";
 import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
-import { useOperatorUpdate } from "hooks";
+import { useShablonOperatorCreate } from "hooks";
 import { queryClient } from "services";
+import OperatorShablonForm from "./OperatorShablonForm";
 
 interface Props extends Omit<ModalProps, "onCancel"> {
   onCancel: VoidFunction;
-  row: OperatorResponseDto;
 }
 
-const ModalOperatorUpdate: FC<Props> = ({ onCancel, row, ...props }) => {
+const ModalOperatorShablonCreate: FC<Props> = ({ onCancel, ...props }) => {
   const { t } = useTranslation();
 
-  const form = useForm<{ name: string }>({
-    resolver: zodResolver(z.object({ name: requiredField() })),
+  const form = useForm<{ operator: string; shablonCode: string }>({
+    resolver: zodResolver(
+      z.object({ operator: requiredField(), shablonCode: requiredField() })
+    ),
   });
 
-  useEffect(() => {
-    form.reset(row);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [row]);
-
-  const updateMutation = useOperatorUpdate({
+  const createMutation = useShablonOperatorCreate({
     onSuccess() {
-      queryClient.invalidateQueries(["/v1/operator/get-all"]);
+      queryClient.invalidateQueries(["/v1/shablon-operator/get-all"]);
       onCancel();
       notification.success({ message: t("Муваффақиятли сақланди") });
     },
@@ -43,11 +38,11 @@ const ModalOperatorUpdate: FC<Props> = ({ onCancel, row, ...props }) => {
     },
   });
 
-  const onSubmit = form.handleSubmit((values) => {
-    updateMutation.mutate({
+  const onSubmit = form.handleSubmit(({ shablonCode, ...values }) => {
+    createMutation.mutate({
       payload: {
         ...values,
-        id: row?.id!,
+        shablonCode: Number(shablonCode),
       },
     });
   });
@@ -59,12 +54,11 @@ const ModalOperatorUpdate: FC<Props> = ({ onCancel, row, ...props }) => {
       footer={null}
       onCancel={onCancel}
       width={600}
-      title={<h2 className="text-center mb20">{t("Таҳрирлаш")}</h2>}
+      title={<h2 className="text-center mb20">{t("Шаблон оператор қўшиш")}</h2>}
     >
       <Divider />
-      <OperatorForm form={form} />
-      <Divider />
-      <Row justify="center" className="mt30 mb10 gap-10">
+      <OperatorShablonForm form={form} />
+      <Row gutter={[20, 20]} justify="center" className="mt30 mb10 gap-10">
         <Button
           size="large"
           type="link"
@@ -80,7 +74,7 @@ const ModalOperatorUpdate: FC<Props> = ({ onCancel, row, ...props }) => {
           shape="round"
           icon={<CheckOutlined />}
           onClick={onSubmit}
-          loading={updateMutation.isLoading}
+          loading={createMutation.isLoading}
         >
           {t("Сақлаш")}
         </Button>
@@ -89,4 +83,4 @@ const ModalOperatorUpdate: FC<Props> = ({ onCancel, row, ...props }) => {
   );
 };
 
-export default ModalOperatorUpdate;
+export default ModalOperatorShablonCreate;

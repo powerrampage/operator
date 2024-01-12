@@ -1,30 +1,27 @@
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, ColumnsType, Table } from "components/shared";
-import {
-  useOperatorActivate,
-  useOperatorGetAll,
-  usePagination,
-  useShablonGetAll,
-  useShablonOperatorGetAll,
-} from "hooks";
-import { OperatorResponseDto } from "types";
-import dayjs from "dayjs";
+import { usePagination, useShablonOperatorGetAll } from "hooks";
+import { ShablonOperatorResponseDto } from "types";
 import { DATE_FORMAT } from "constants/general";
 import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Col, Row, notification } from "antd";
+import { Row } from "antd";
+import dayjs from "dayjs";
+
+import ModalOperatorShablonCreate from "./components/ModalOperatorShablonCreate";
+import ModalOperatorShablonUpdate from "./components/ModalOperatorShablonUpdate";
 
 const OperatorShablon: FC = () => {
   const { t } = useTranslation();
   const { page, pageSize, setPage } = usePagination();
-  const [modal, setModal] = useState<"close" | "update">("close");
-  const [row, setRow] = useState<OperatorResponseDto>();
+  const [modal, setModal] = useState<"close" | "create" | "update">("close");
+  const onClose = () => setModal("close");
+  const [row, setRow] = useState<ShablonOperatorResponseDto>();
 
   const getAllQuery = useShablonOperatorGetAll({ page, size: pageSize });
   const dataGetAll = getAllQuery.data?.data;
 
-
-  const columns: ColumnsType<OperatorResponseDto> = [
+  const columns: ColumnsType<ShablonOperatorResponseDto> = [
     {
       title: "№",
       render: (_, __, idx) => page * pageSize + idx + 1,
@@ -33,6 +30,11 @@ const OperatorShablon: FC = () => {
     {
       title: t("Оператор"),
       dataIndex: "operator",
+    },
+    {
+      title: t("Шаблон коди"),
+      align: "center",
+      dataIndex: "shablonCode",
     },
     {
       title: t("Яратилган сана"),
@@ -69,10 +71,16 @@ const OperatorShablon: FC = () => {
   return (
     <div className="mb40">
       <Row className="mb20" justify="end">
-        <Button shape="round" type="primary" icon={<PlusCircleOutlined />}>
+        <Button
+          shape="round"
+          type="primary"
+          icon={<PlusCircleOutlined />}
+          onClick={() => setModal("create")}
+        >
           {t("Шаблон оператор қўшиш")}
         </Button>
       </Row>
+
       <Table
         size="small"
         columns={columns}
@@ -82,11 +90,14 @@ const OperatorShablon: FC = () => {
           pageSize,
           current: page + 1,
           total: dataGetAll?.totalCount,
-          onChange: (page) => {
-            setPage(page - 1);
-          },
+          onChange: (page) => setPage(page - 1),
         }}
       />
+
+      {modal === "create" && <ModalOperatorShablonCreate onCancel={onClose} />}
+      {modal === "update" && row && (
+        <ModalOperatorShablonUpdate row={row} onCancel={onClose} />
+      )}
     </div>
   );
 };
