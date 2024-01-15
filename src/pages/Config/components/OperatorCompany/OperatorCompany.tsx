@@ -83,7 +83,7 @@ const OperatorCompany: FC = () => {
         return (
           <Switch
             checked={!!value}
-            title={t("Оператор ташкилотни ёқиш/ўчириш")}
+            title={t("operator kompanyни ёқиш/ўчириш")}
             onChange={(checked) => {
               if (checked) {
                 activateMutation.mutate({ params: { id } });
@@ -124,7 +124,7 @@ const OperatorCompany: FC = () => {
           icon={<PlusCircleOutlined />}
           onClick={() => setModal("create")}
         >
-          {t("Оператор ташкилот қўшиш")}
+          {t("operator kompany қўшиш")}
         </Button>
       </Row>
       <Table
