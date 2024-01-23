@@ -18,7 +18,7 @@ const Config: FC = () => {
         key: "operator",
       },
       {
-        label: t("operator kompany"),
+        label: t("Operator kompany"),
         key: "operator-company",
       },
       {

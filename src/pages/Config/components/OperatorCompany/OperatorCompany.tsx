@@ -124,7 +124,7 @@ const OperatorCompany: FC = () => {
           icon={<PlusCircleOutlined />}
           onClick={() => setModal("create")}
         >
-          {t("operator kompany қўшиш")}
+          {t("Operator kompany қўшиш")}
         </Button>
       </Row>
       <Table
