@@ -7,6 +7,4 @@ export const selectUserState = (state: AppState) => {
 
 export const selectUserInfo = createSelector(selectUserState, (state) => state);
 
-export const selectUserToken = createSelector(selectUserState, (state) => state.userToken);
-
 export const selectUserRole = createSelector(selectUserState, (state) => state.role);

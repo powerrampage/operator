@@ -13,23 +13,18 @@ export const queryClient = new QueryClient({
 });
 
 export function useAPIInstances() {
-  const { token, logoutUser, language } = useUser();
+  const { logoutUser } = useUser();
 
   // General request (project request)
   const generalRequest = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    headers: {
-      Authorization: "Bearer " + token,
-    },
+    auth: { username: "sms", password: "sms$?221" },
   });
 
   [generalRequest].forEach(({ interceptors: { request, response } }) => {
     request.use(
       (config) => {
-        if (token) {
-          config.headers["Accept-Language"] = language;
-          config.headers.Authorization = "Bearer " + token;
-        }
+        config.auth = { username: "sms", password: "sms$?221" };
         return config;
       },
       (error) => Promise.reject(error)

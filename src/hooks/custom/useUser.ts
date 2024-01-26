@@ -14,10 +14,10 @@ import { UserRoles } from "types";
 const useUser = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { userToken, userInfo } = useAppSelector(selectUserState);
+  const { userInfo } = useAppSelector(selectUserState);
   const role = useAppSelector(selectUserRole) as UserRoles;
   const language = i18n.language;
-  const isLogged = !!userToken;
+  const isLogged = !!Object.keys(userInfo).length;
 
   function clearUserData() {
     persistor.purge();
@@ -33,7 +33,6 @@ const useUser = () => {
 
   return {
     isLogged,
-    token: userToken,
     userInfo,
     logoutUser,
     language,

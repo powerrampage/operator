@@ -9,8 +9,7 @@ import i18n from "services/i18n";
 import { Space, notification } from "antd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRegisterUser } from "hooks";
-import { setToken, setUserInfo, setUserRole, useAppDispatch } from "store";
-import { _stringify } from "utils";
+import { setUserInfo, setUserRole, useAppDispatch } from "store";
 import classes from "./SignIn.module.scss";
 import Logo from "assets/images/png/logo.png";
 
@@ -65,7 +64,6 @@ const SignIn: FC = () => {
     // loginMutation.mutate({
     //   payload: { userName: username, password },
     // });
-    dispatch(setToken("token123"));
     dispatch(setUserRole("ADMIN"));
     dispatch(
       setUserInfo({
