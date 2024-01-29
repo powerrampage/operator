@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { ColumnsType, Table } from "components/shared";
 import { Badge } from "antd";
@@ -6,12 +6,14 @@ import { useInfoGetAllMessageStatusByNumberOperator, usePagination } from "hooks
 import { useSearchParams } from "react-router-dom";
 import { MessageStatusDto } from "types";
 
-const TableList: FC = () => {
+const TableList: FC<{ pagination: ReturnType<typeof usePagination> }> = ({
+  pagination,
+}) => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const number = searchParams.get("phone")!;
   const operator = searchParams.get("operator")!;
-  const { page, pageSize, setPage } = usePagination({});
+  const { page, pageSize, setPage } = pagination;
 
   const messageOperatorQuery = useInfoGetAllMessageStatusByNumberOperator(
     {

@@ -3,12 +3,14 @@ import { useTranslation } from "react-i18next";
 import { Col, Row, Space } from "antd";
 import { Input, Select } from "components/shared";
 import { useSearchParams } from "react-router-dom";
-import { useOperatorGetAll } from "hooks";
+import { useOperatorGetAll, usePagination } from "hooks";
 import { returnArrayIfIsset } from "utils";
 
 const OPERATOR_ALL_ID = 4;
 
-const FilterAction: FC = () => {
+const FilterAction: FC<{ pagination: ReturnType<typeof usePagination> }> = ({
+  pagination,
+}) => {
   const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const phone = searchParams.get("phone")!;
@@ -30,6 +32,7 @@ const FilterAction: FC = () => {
     } else {
       searchParams.delete(label);
     }
+    pagination.setPage(0);
     setSearchParams(searchParams, { replace: true });
   };
 
