@@ -8,18 +8,11 @@ import { MessageStatusDto } from "types";
 
 const TableList: FC = () => {
   const { t } = useTranslation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const number = searchParams.get("phone")!;
   const operator = searchParams.get("operator")!;
   const { page, pageSize, setPage } = usePagination({});
   const expandedPagination = usePagination({});
-
-  useEffect(() => {
-    if (!number) {
-      searchParams.delete("operator");
-      setSearchParams(searchParams);
-    }
-  }, [number, searchParams, setSearchParams]);
 
   const messageOperatorQuery = useInfoGetAllMessageStatusByNumberOperator(
     {
