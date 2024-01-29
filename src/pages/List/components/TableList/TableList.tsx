@@ -21,7 +21,7 @@ const TableList: FC = () => {
       page: expandedPagination.page,
       size: expandedPagination.pageSize,
     },
-    { enabled: Boolean(number && operator) }
+    { enabled: Boolean(number || operator) }
   );
   const expandedDataMessage = useMemo(
     () => messageOperatorQuery.data?.data,
