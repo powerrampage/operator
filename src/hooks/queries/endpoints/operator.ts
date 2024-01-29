@@ -17,7 +17,7 @@ export const useOperatorGetAll = (
   });
 
 export const useOperatorGetDefaultOperator = (
-  params: Pageable,
+  params?: Pageable,
   options?: QueryOptions<ResponseDataDtoOperatorResponseDto, ErrorReason>
 ) =>
   useGeneralAPIQuery({

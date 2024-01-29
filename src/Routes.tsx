@@ -12,6 +12,7 @@ const Config = lazy(() => import("pages/Config"));
 const Operator = lazy(() => import("pages/Config/components/Operator"));
 const OperatorShablon = lazy(() => import("pages/Config/components/OperatorShablon"));
 const OperatorCompany = lazy(() => import("pages/Config/components/OperatorCompany"));
+const DefaultOperator = lazy(() => import("pages/Config/components/DefaultOperator"));
 
 export default function AllRoutes() {
   const { isLogged, role } = useUser();
@@ -43,6 +44,7 @@ export default function AllRoutes() {
         { path: "operator", element: <Operator /> },
         { path: "operator-company", element: <OperatorCompany /> },
         { path: "operator-shablon", element: <OperatorShablon /> },
+        { path: "default-operator", element: <DefaultOperator /> },
       ],
     },
     {

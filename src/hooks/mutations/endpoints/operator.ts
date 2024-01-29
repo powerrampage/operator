@@ -42,3 +42,12 @@ export const useOperatorUpdate = (
     method: "PUT",
     options,
   });
+
+export const useOperatorChangeDefaultOperator = (
+  options?: MutationOptions<ResponseDataDtoObject, ErrorReason>
+) =>
+  useGeneralAPIMutation({
+    url: "/v1/operator/change-default-operator",
+    method: "PUT",
+    options,
+  });

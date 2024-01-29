@@ -25,6 +25,10 @@ const Config: FC = () => {
         label: t("Шаблон оператор"),
         key: "operator-shablon",
       },
+      {
+        label: t("Стандарт оператор"),
+        key: "default-operator",
+      },
     ],
     [t]
   );

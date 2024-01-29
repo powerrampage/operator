@@ -17,7 +17,7 @@ const FilterAction: FC = () => {
     searchParams.set("fromDate", defaultDate.from);
     searchParams.set("toDate", defaultDate.end);
     setSearchParams(searchParams);
-  }, []);
+  }, [searchParams]);
 
   return (
     <Row justify="space-between" className="mb40">
