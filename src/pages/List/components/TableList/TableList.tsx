@@ -12,14 +12,13 @@ const TableList: FC = () => {
   const number = searchParams.get("phone")!;
   const operator = searchParams.get("operator")!;
   const { page, pageSize, setPage } = usePagination({});
-  const expandedPagination = usePagination({});
 
   const messageOperatorQuery = useInfoGetAllMessageStatusByNumberOperator(
     {
       number,
       operator,
-      page: expandedPagination.page,
-      size: expandedPagination.pageSize,
+      page,
+      size: pageSize,
     },
     { enabled: Boolean(number || operator) }
   );
