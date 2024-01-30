@@ -36,14 +36,15 @@ const TableList: FC<{ pagination: ReturnType<typeof usePagination> }> = ({
       width: 80,
       render: (_, __, idx) => page * pageSize + idx + 1,
     },
+    { title: t("Телефон рақам"), dataIndex: "phoneNumber", align: "center" },
     { title: t("Оператор"), dataIndex: "operator", align: "center" },
-    { title: t("Қачон кетди"), dataIndex: "createdDate", align: "center" },
     {
       title: t("Жавоб ҳолати"),
       dataIndex: "status",
       align: "center",
       render: (value) => (value ? <Badge status="processing" text={value} /> : "-"),
     },
+    { title: t("Қачон кетди"), dataIndex: "createdDate", align: "center" },
   ];
 
   return (
