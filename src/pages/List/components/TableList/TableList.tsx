@@ -5,6 +5,8 @@ import { Badge } from "antd";
 import { useInfoGetAllMessageStatusByNumberOperator, usePagination } from "hooks";
 import { useSearchParams } from "react-router-dom";
 import { MessageStatusDto } from "types";
+import dayjs from "dayjs";
+import { DATE_FORMAT } from "constants/general";
 
 const TableList: FC<{ pagination: ReturnType<typeof usePagination> }> = ({
   pagination,
@@ -44,7 +46,12 @@ const TableList: FC<{ pagination: ReturnType<typeof usePagination> }> = ({
       align: "center",
       render: (value) => (value ? <Badge status="processing" text={value} /> : "-"),
     },
-    { title: t("Қачон кетди"), dataIndex: "createdDate", align: "center" },
+    {
+      title: t("Қачон кетди"),
+      dataIndex: "createdDate",
+      align: "center",
+      render: (value) => value && dayjs(value).format(DATE_FORMAT),
+    },
   ];
 
   return (
