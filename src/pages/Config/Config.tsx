@@ -3,6 +3,7 @@ import { Container } from "components/shared";
 import { Tabs, TabsProps } from "antd";
 import { useTranslation } from "react-i18next";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import ClearCacheButton from "./components/ClearCacheButton";
 
 const Config: FC = () => {
   const { t } = useTranslation();
@@ -46,6 +47,7 @@ const Config: FC = () => {
               replace: true,
             });
           }}
+          tabBarExtraContent={{ right: <ClearCacheButton /> }}
         />
         <Outlet />
       </Container>
