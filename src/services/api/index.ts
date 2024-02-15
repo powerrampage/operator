@@ -18,13 +18,13 @@ export function useAPIInstances() {
   // General request (project request)
   const generalRequest = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    auth: { username: "sms", password: "sms$?221" },
+    auth: { username: "sms", password: "#sms$" },
   });
 
   [generalRequest].forEach(({ interceptors: { request, response } }) => {
     request.use(
       (config) => {
-        config.auth = { username: "sms", password: "sms$?221" };
+        config.auth = { username: "sms", password: "#sms$" };
         return config;
       },
       (error) => Promise.reject(error)
